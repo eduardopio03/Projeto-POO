@@ -13,7 +13,7 @@ public class Room {
 	public Room() {
 		manel = new Manel(heroStartingPosition);
 		ImageGUI.getInstance().addImage(manel);
-		ImageGUI.getInstance().addImage(new Wall());
+		//ImageGUI.getInstance().addImage(new Wall());  TODO: Implementar a leitura do ficheiro
 
 	}
 
