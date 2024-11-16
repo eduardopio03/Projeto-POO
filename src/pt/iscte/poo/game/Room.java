@@ -6,7 +6,7 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Room {
 
-    private Point2D heroStartingPosition = new Point2D(1, 1);
+    private Point2D heroStartingPosition = new Point2D(9, 9);
     private JumpMan jumpMan;
 
     public Room() {
