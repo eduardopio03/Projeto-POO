@@ -1,5 +1,6 @@
 package pt.iscte.poo.game;
 
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -31,11 +32,21 @@ public class JumpMan extends Character {
 
     public void move(Direction direction) {
         if (direction != null) {
-            position = position.plus(direction.asVector()); // Atualiza a posição conforme a direção
+            // Calcula a nova posição com base na direção
+            Point2D newPosition = position.plus(direction.asVector());
+            
+            // Verifica se a nova posição está dentro dos limites do tabuleiro
+            if (ImageGUI.getInstance().isWithinBounds(newPosition)) {
+                position = newPosition; // Atualiza a posição se estiver dentro dos limites
+            } else {
+                System.out.println("Movimento inválido: fora dos limites do tabuleiro.");
+            }
         } else {
             throw new IllegalArgumentException("Direção inválida: null");
         }
     }
+    
+
 
     // Método adicional para manipular saúde (se necessário)
     public int getHealth() {
