@@ -14,8 +14,8 @@ public class JumpMan extends Character {
         this.position = initialPosition;
         this.health = initialHealth; // Inicializa a saúde
     }
-
     
+    @Override
     public String getName() {
         return "JumpMan"; // Nome da imagem ou objeto representado
     }
@@ -30,6 +30,7 @@ public class JumpMan extends Character {
         return 1; // Define a camada de exibição
     }
 
+    @Override
     public void move(Direction direction) {
         if (direction != null) {
             // Calcula a nova posição com base na direção
@@ -49,10 +50,12 @@ public class JumpMan extends Character {
 
 
     // Método adicional para manipular saúde (se necessário)
+    @Override
     public int getHealth() {
         return health;
     }
 
+    @Override
     public void setHealth(int health) {
         this.health = health;
     }
@@ -64,4 +67,5 @@ public class JumpMan extends Character {
             System.out.println("Manel foi derrotado!");
         }
     }
+
 }
