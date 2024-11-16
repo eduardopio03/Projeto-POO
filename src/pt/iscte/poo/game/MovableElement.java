@@ -1,9 +1,10 @@
 package pt.iscte.poo.game;
 
+import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
-public abstract class MovableElement implements Movable {
+public abstract class MovableElement implements Movable, ImageTile {
     private Point2D position; // Posição do elemento no jogo
 
 

@@ -1,20 +1,20 @@
 package pt.iscte.poo.game;
 
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
-public class JumpMan implements ImageTile {
+public class JumpMan extends Character {
 
     private Point2D position;
     private int health; // Atributo de saúde incorporado, se necessário
 
     public JumpMan(Point2D initialPosition, int initialHealth) {
+        super(initialPosition, initialHealth);
         this.position = initialPosition;
         this.health = initialHealth; // Inicializa a saúde
     }
 
-    @Override
+    
     public String getName() {
         return "JumpMan"; // Nome da imagem ou objeto representado
     }
