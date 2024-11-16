@@ -24,7 +24,7 @@ public void update(Observed source) {
             // Usa o método directionFor para obter a direção
             Direction direction = Direction.directionFor(keyCode);
             System.out.println("Moving Manel in direction: " + direction);
-            currentRoom.moveManel(direction);
+            currentRoom.moveJumpMan(direction);
         } catch (IllegalArgumentException e) {
             // Tecla pressionada não corresponde a uma direção
             System.out.println("Invalid key pressed: " + keyCode);
