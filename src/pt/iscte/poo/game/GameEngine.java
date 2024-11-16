@@ -15,22 +15,29 @@ public class GameEngine implements Observer {
 	}
 
 	@Override
-	public void update(Observed source) {
-		
-		if (ImageGUI.getInstance().wasKeyPressed()) {
-			int k = ImageGUI.getInstance().keyPressed();
-			System.out.println("Keypressed " + k);
-			if (Direction.isDirection(k)) {
-				System.out.println("Direction! ");
-				currentRoom.moveManel();
-			}
-		}
-		int t = ImageGUI.getInstance().getTicks();
-		while (lastTickProcessed < t) {
-			processTick();
-		}
-		ImageGUI.getInstance().update();
-	}
+public void update(Observed source) {
+    if (ImageGUI.getInstance().wasKeyPressed()) {
+        int keyCode = ImageGUI.getInstance().keyPressed();
+        System.out.println("Key pressed: " + keyCode);
+
+        try {
+            // Usa o método directionFor para obter a direção
+            Direction direction = Direction.directionFor(keyCode);
+            System.out.println("Moving Manel in direction: " + direction);
+            currentRoom.moveManel(direction);
+        } catch (IllegalArgumentException e) {
+            // Tecla pressionada não corresponde a uma direção
+            System.out.println("Invalid key pressed: " + keyCode);
+        }
+    }
+
+    int t = ImageGUI.getInstance().getTicks();
+    while (lastTickProcessed < t) {
+        processTick();
+    }
+    ImageGUI.getInstance().update();
+}
+
 
 	private void processTick() {
 		System.out.println("Tic Tac : " + lastTickProcessed);
