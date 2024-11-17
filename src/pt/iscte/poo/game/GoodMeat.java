@@ -1,5 +1,7 @@
 package pt.iscte.poo.game;
 
+import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.Consumables.GoodConsumable;
 import pt.iscte.poo.utils.Point2D;
 
 public class GoodMeat extends GoodConsumable {
