@@ -1,5 +1,6 @@
-package pt.iscte.poo.game;
+package pt.iscte.poo.Consumables;
 
+import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.utils.Point2D;
 
 public class Sword extends GoodConsumable {

@@ -1,14 +1,15 @@
-package pt.iscte.poo.game;
+package pt.iscte.poo.Characters;
 
+import pt.iscte.poo.game.Movable;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public abstract class Character implements ImageTile, Movable {
-    
+public abstract class Enemy implements ImageTile, Movable {
+
     private Point2D position;
     private int health;
 
-    public Character(Point2D startPosition, int initialHealth) {
+    public Enemy(Point2D startPosition, int initialHealth) {
         this.position = startPosition;
         this.health = initialHealth;
     }
@@ -31,3 +32,5 @@ public abstract class Character implements ImageTile, Movable {
 
 
 }
+
+    

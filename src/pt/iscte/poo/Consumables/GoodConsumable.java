@@ -1,4 +1,4 @@
-package pt.iscte.poo.game;
+package pt.iscte.poo.Consumables;
 
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;

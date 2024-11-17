@@ -1,4 +1,6 @@
-package pt.iscte.poo.game;
+package pt.iscte.poo.Consumables;
+
+import pt.iscte.poo.Characters.JumpMan;
 
 public interface Consumable {
 
