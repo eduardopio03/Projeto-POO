@@ -2,7 +2,7 @@ package pt.iscte.poo.game;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Sword extends Consumable {
+public class Sword extends GoodConsumable {
 
     public Sword(Point2D position) {
         super(position);
@@ -16,5 +16,11 @@ public class Sword extends Consumable {
     @Override
     public int getLayer() {
         return 1;
+    }
+
+    @Override
+    public void consume(JumpMan jumpMan) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'consume'");
     }
 }

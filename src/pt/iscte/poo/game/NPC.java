@@ -1,39 +1,21 @@
 package pt.iscte.poo.game;
 
+import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public abstract class NPC extends MovableElement {
+public abstract class NPC implements ImageTile, Movable {
+
+    private Point2D position;
     
-    private int health; // Vida do personagem
-
-    public NPC(Point2D startPosition, int initialHealth) {
-        super(startPosition);
-        this.health = initialHealth;
+    public NPC(Point2D startPosition) {
+        this.position = startPosition;
     }
 
-    public int getHealth() {
-        return health;
+    public Point2D getPosition() {
+        return position;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setPosition(Point2D position) {
+        this.position = position;
     }
-
-    public void decreaseHealth(int damage) {
-        health -= damage;
-    }
-
-    public void increaseHealth(int heal) {
-        health += heal;
-    }
-
-    public boolean isAlive() {
-        return health > 0;
-    }
-
-    public void die() {
-        health = 0;
-    }
-
-    
 }
