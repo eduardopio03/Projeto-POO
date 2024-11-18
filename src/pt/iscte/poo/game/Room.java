@@ -3,11 +3,11 @@ package pt.iscte.poo.game;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import objects.Stairs;
-import objects.Wall;
 import objects.DoorClosed;
 import objects.Floor;
+import objects.Stairs;
 import objects.Trap;
+import objects.Wall;
 import pt.iscte.poo.Characters.DonkeyKong;
 import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.Characters.Princess;
@@ -84,8 +84,6 @@ public class Room {
                             break;
 
                         default:
-                           // Espaço vazio ignorado
-                           // Ver no vídeo qual a imagem que se usa no fundo
                             break;
                     }
                 }
