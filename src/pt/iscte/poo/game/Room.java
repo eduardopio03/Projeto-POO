@@ -22,7 +22,7 @@ public class Room {
     private JumpMan jumpMan;
 
     public Room() {
-        File roomFile = new File("room0.txt");
+        File roomFile = new File("room2.txt");
         background();
         fileReader(roomFile);
     }
@@ -79,7 +79,7 @@ public class Room {
                             break;
 
                         case 'P': // princesa
-                            ImageTile princess = new Princess(point);
+                            GameElement princess = new Princess(point);
                             ImageGUI.getInstance().addImage(princess);
                             break;
 

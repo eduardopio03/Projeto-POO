@@ -18,4 +18,5 @@ public class Princess extends NPC {
         return 1;
     }
 
+
 }

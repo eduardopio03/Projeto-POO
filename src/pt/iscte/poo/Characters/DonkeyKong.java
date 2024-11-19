@@ -1,5 +1,6 @@
 package pt.iscte.poo.Characters;
 
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -21,7 +22,17 @@ public class DonkeyKong extends Character {
 
     @Override
     public void move(Direction direction) {
-        //TODO: Implementar o movimento do DonkeyKong
+        int ticks = ImageGUI.getInstance().getTicks();
+        if (ticks % 3 == 0) {
+            moveRandomly();
+        }
     }
+
+    private void moveRandomly() {
+        
+    }
+        
+
+    
 
 }

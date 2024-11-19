@@ -1,21 +1,14 @@
 package pt.iscte.poo.Characters;
 
-import pt.iscte.poo.gui.ImageTile;
+import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.utils.Point2D;
 
-public abstract class NPC implements ImageTile {
+public abstract class NPC extends GameElement {
 
-    private Point2D position;
-    
-    public NPC(Point2D startPosition) {
-        this.position = startPosition;
-    }
-
-    public Point2D getPosition() {
-        return position;
-    }
-
-    public void setPosition(Point2D position) {
-        this.position = position;
+    public NPC(Point2D position) {
+        super(position);
     }
 }
+
+
+

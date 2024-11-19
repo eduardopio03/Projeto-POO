@@ -6,23 +6,14 @@ import pt.iscte.poo.utils.Point2D;
 
 public class JumpMan extends Character {
 
-    private Point2D position;
-    private int health; 
-
+   
     public JumpMan(Point2D initialPosition, int initialHealth) {
         super(initialPosition, initialHealth);
-        this.position = initialPosition;
-        this.health = initialHealth; 
     }
     
     @Override
     public String getName() {
         return "JumpMan"; 
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return position; 
     }
 
     @Override
@@ -34,10 +25,10 @@ public class JumpMan extends Character {
     public void move(Direction direction) {
         if (direction != null) {
             // Cálculo da nova posição
-            Point2D newPosition = position.plus(direction.asVector());
+            Point2D newPosition = super.getPosition().plus(direction.asVector());
             // Verificação dos limites do tabuleiro
             if (ImageGUI.getInstance().isWithinBounds(newPosition)) {
-                position = newPosition;
+                super.setPosition(newPosition);
             } else {
                 System.out.println("Movimento inválido: fora dos limites do tabuleiro.");
             }
