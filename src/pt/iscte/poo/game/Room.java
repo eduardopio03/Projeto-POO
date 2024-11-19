@@ -20,11 +20,16 @@ import pt.iscte.poo.utils.Point2D;
 public class Room {
 
     private JumpMan jumpMan;
+    private DonkeyKong donkeyKong;
 
     public Room() {
-        File roomFile = new File("room2.txt");
+        File roomFile = new File("room0.txt");
         background();
         fileReader(roomFile);
+    }
+
+    public DonkeyKong getDonkeyKong() {
+        return donkeyKong;
     }
 
     public void moveJumpMan(Direction direction) {
@@ -69,7 +74,7 @@ public class Room {
                             break;
 
                         case 'G': // donkeyKong
-                            ImageTile donkeyKong = new DonkeyKong(point, 10);
+                            donkeyKong = new DonkeyKong(point, 100); 
                             ImageGUI.getInstance().addImage(donkeyKong);
                             break;
 
