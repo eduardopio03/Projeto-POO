@@ -1,14 +1,12 @@
 package objects;
 
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public class DoorClosed implements ImageTile{
+public class DoorClosed extends StaticElement {
 
-  private Point2D point;
 
   public DoorClosed(Point2D point) {
-    this.point = point;
+    super(point);
   } 
 
   @Override
@@ -18,7 +16,7 @@ public class DoorClosed implements ImageTile{
 
   @Override
   public Point2D getPosition() {
-    return point;
+    return super.getPosition();
   }
 
   @Override

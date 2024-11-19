@@ -1,14 +1,11 @@
 package objects;
 
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public class Floor implements ImageTile {
-
-	private final Point2D point;
+public class Floor extends StaticElement {
 
 	public Floor(Point2D point) {
-		this.point = point;
+		super(point);
 	}
 
 	@Override
@@ -23,7 +20,7 @@ public class Floor implements ImageTile {
 
 	@Override
 	public Point2D getPosition() {
-		return point;
+		return super.getPosition();
 	}
 
 

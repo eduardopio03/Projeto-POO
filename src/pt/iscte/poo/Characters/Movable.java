@@ -1,4 +1,4 @@
-package pt.iscte.poo.game;
+package pt.iscte.poo.Characters;
 
 import pt.iscte.poo.utils.Direction;
 
