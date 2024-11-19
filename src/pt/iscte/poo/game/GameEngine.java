@@ -15,15 +15,15 @@ public class GameEngine implements Observer {
 	}
 
 	@Override
-public void update(Observed source) {
-    if (ImageGUI.getInstance().wasKeyPressed()) {
-        int keyCode = ImageGUI.getInstance().keyPressed();
-        System.out.println("Key pressed: " + keyCode);
+    public void update(Observed source) {
+        if (ImageGUI.getInstance().wasKeyPressed()) {
+            int keyCode = ImageGUI.getInstance().keyPressed();
+            System.out.println("Key pressed: " + keyCode);
 
         try {
             // Obter a direção correspondente à tecla 
             Direction direction = Direction.directionFor(keyCode);
-            System.out.println("Moving Manel in direction: " + direction);
+            System.out.println("Moving JumpMan in direction: " + direction);
             currentRoom.moveJumpMan(direction);
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid key pressed: " + keyCode);

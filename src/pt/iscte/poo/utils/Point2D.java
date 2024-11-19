@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 // Updated 27-Feb-2018
 // Updated 28-Nov-2021
+// Updated 19-Nov-2024
 
 public class Point2D implements Serializable { // Added 23-Apr-2018
 
@@ -77,6 +78,11 @@ public class Point2D implements Serializable { // Added 23-Apr-2018
 		return new Point2D(x + v.getX(), y + v.getY());
 	}
 
+	// Added nov-2024, LN
+	public Point2D scaleIsotropical(int scale_factor) {
+		return new Point2D(x * scale_factor, y * scale_factor);
+	}
+	
 	public List<Point2D> getNeighbourhoodPoints() {
 		
 		List<Point2D> neighbours = new ArrayList<>();
