@@ -23,8 +23,7 @@ public class Stairs implements ImageTile {
 
   @Override
   public int getLayer() {
-    //TODO
-    return 0;
+    return 1;
   }
 
 }
