@@ -1,14 +1,17 @@
 package pt.iscte.poo.Characters;
 
+import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
 public class JumpMan extends Character {
 
+    Room currentRoom;
    
-    public JumpMan(Point2D initialPosition, int initialHealth) {
+    public JumpMan(Point2D initialPosition, int initialHealth, Room room) {
         super(initialPosition, initialHealth);
+        this.currentRoom = room;
     }
     
     @Override
@@ -24,16 +27,27 @@ public class JumpMan extends Character {
     @Override
     public void move(Direction direction) {
         if (direction != null) {
-            // Cálculo da nova posição
             Point2D newPosition = super.getPosition().plus(direction.asVector());
-            // Verificação dos limites do tabuleiro
+
+            //Verificar se esta dentro dos limites do tabuleiro
             if (ImageGUI.getInstance().isWithinBounds(newPosition)) {
-                super.setPosition(newPosition);
-            } else {
-                System.out.println("Movimento inválido: fora dos limites do tabuleiro.");
+                //Verificar se não é uma parede
+                if (!currentRoom.getBoardMap().containsKey(newPosition) ||
+                    !currentRoom.getBoardMap().get(newPosition).equals("Wall")){
+                
+                    //Atualizar a posição no mapa
+                    currentRoom.getBoardMap().remove(super.getPosition());
+                    super.setPosition(newPosition);
+                    currentRoom.getBoardMap().put(newPosition, "JumpMan");
+                }
             }
-        } else {
-            throw new IllegalArgumentException("Direção inválida: null");
-        }
+            else {
+                System.out.println("Movimento inválido");
+            }
+        }  
+        else 
+            throw new IllegalArgumentException("Direção inválida");
     }
 }
+
+

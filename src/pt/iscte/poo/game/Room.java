@@ -2,6 +2,8 @@ package pt.iscte.poo.game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import objects.DoorClosed;
 import objects.Floor;
@@ -21,6 +23,8 @@ public class Room {
 
     private JumpMan jumpMan;
     private DonkeyKong donkeyKong;
+
+    private Map<Point2D, String> boardMap = new HashMap<>();
 
     public Room() {
         File roomFile = new File("room0.txt");
@@ -49,43 +53,52 @@ public class Room {
 
                     switch (symbol) {
                         case 'W': // Parede
-                            ImageTile wall = new Wall(point);
+                            Wall wall = new Wall(point);
                             ImageGUI.getInstance().addImage(wall);
+                            boardMap.put(point, "Wall");
                             break;
 
                         case 'S': // Escada
-                            ImageTile stair = new Stairs(point);
-                            ImageGUI.getInstance().addImage(stair);
+                            Stairs stairs = new Stairs(point);
+                            ImageGUI.getInstance().addImage(stairs);
+                            boardMap.put(point, "Stairs");
                             break;
 
-                        case 'H': // JumpMan
-                            jumpMan = new JumpMan(point,10);
+                            case 'H': // JumpMan
+                            jumpMan = new JumpMan(point, 10, this); // Passa o Room atual
                             ImageGUI.getInstance().addImage(jumpMan);
+                            boardMap.put(point, "JumpMan");
                             break;
+                        
 
                         case '0': //porta
-                            ImageTile door = new DoorClosed(point);
+                            DoorClosed door = new DoorClosed(point);
                             ImageGUI.getInstance().addImage(door);
+                            boardMap.put(point, "DoorClosed");
                             break;
 
                         case 't': //Trap
-                            ImageTile trap = new Trap(point);
+                            Trap trap = new Trap(point);
                             ImageGUI.getInstance().addImage(trap);
+                            boardMap.put(point, "Trap");
                             break;
 
                         case 'G': // donkeyKong
                             donkeyKong = new DonkeyKong(point, 100); 
                             ImageGUI.getInstance().addImage(donkeyKong);
+                            boardMap.put(point, "DonkeyKong");
                             break;
 
                         case 'm': // goodMeat
-                            ImageTile meat = new GoodMeat(point);
+                            GoodMeat meat = new GoodMeat(point);
                             ImageGUI.getInstance().addImage(meat);
+                            boardMap.put(point, "GoodMeat");
                             break;
 
                         case 'P': // princesa
-                            GameElement princess = new Princess(point);
+                            Princess princess = new Princess(point);
                             ImageGUI.getInstance().addImage(princess);
+                            boardMap.put(point, "Princess");
                             break;
 
                         default:
@@ -109,4 +122,9 @@ public class Room {
             }
         }
     }
+
+    public Map<Point2D, String> getBoardMap() {
+        return boardMap;
+    }
+    
 }
