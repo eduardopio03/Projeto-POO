@@ -1,5 +1,7 @@
 package pt.iscte.poo.Characters;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
@@ -8,9 +10,11 @@ import pt.iscte.poo.utils.Point2D;
 public class DonkeyKong extends Character {
 
     private static final Random RANDOM = new Random();
+    private final MapHandler mapHandler;
 
-    public DonkeyKong(Point2D startPosition, int initialHealth) {
+    public DonkeyKong(Point2D startPosition, int initialHealth, MapHandler mapHandler) {
         super(startPosition, initialHealth);
+        this.mapHandler = mapHandler;
     }
 
     @Override
@@ -26,14 +30,29 @@ public class DonkeyKong extends Character {
     @Override
     public void move(Direction direction) {
         Point2D nextPosition = getPosition().plus(direction.asVector());
-        if (ImageGUI.getInstance().isWithinBounds(nextPosition)) {
+        if (ImageGUI.getInstance().isWithinBounds(nextPosition) && mapHandler.isMoveValid(nextPosition)) {
             setPosition(nextPosition);
         }
     }
 
     public void moveRandomly() {
-        Direction randomDirection = Direction.values()[RANDOM.nextInt(Direction.values().length)];
-        move(randomDirection);
+        List<Direction> validDirections = new ArrayList<>();
+        
+        // Verificar quais direções são válidas
+        for (Direction direction : Direction.values()) {
+            Point2D newPosition = getPosition().plus(direction.asVector());
+            
+            // Se o movimento for válido (não for parede e dentro dos limites)
+            if (mapHandler.isMoveValid(newPosition)) {
+                validDirections.add(direction);
+            }
+        }
+
+        // Se houver direções válidas, escolher uma aleatoriamente
+        if (!validDirections.isEmpty()) {
+            int randomIndex = RANDOM.nextInt(validDirections.size());
+            move(validDirections.get(randomIndex));  // Mover para a direção sorteada
+        }
     }
         
 

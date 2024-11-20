@@ -41,7 +41,7 @@ public class GameEngine implements Observer {
 	private void processTick() {
 		System.out.println("Tic Tac : " + lastTickProcessed);
 		
-        if (lastTickProcessed % 3 == 0) {
+        if (lastTickProcessed % 1 == 0) {
             currentRoom.getDonkeyKong().moveRandomly();
         }
 

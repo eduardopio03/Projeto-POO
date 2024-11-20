@@ -12,6 +12,7 @@ import objects.Trap;
 import objects.Wall;
 import pt.iscte.poo.Characters.DonkeyKong;
 import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.Characters.MapHandler;
 import pt.iscte.poo.Characters.Princess;
 import pt.iscte.poo.Consumables.GoodMeat;
 import pt.iscte.poo.gui.ImageGUI;
@@ -19,7 +20,7 @@ import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
-public class Room {
+public class Room implements MapHandler{
 
     private JumpMan jumpMan;
     private DonkeyKong donkeyKong;
@@ -65,7 +66,7 @@ public class Room {
                             break;
 
                             case 'H': // JumpMan
-                            jumpMan = new JumpMan(point, 10, this); // Passa o Room atual
+                            jumpMan = new JumpMan(point, 10, this); // Passa o Room como MapHandler
                             ImageGUI.getInstance().addImage(jumpMan);
                             boardMap.put(point, "JumpMan");
                             break;
@@ -84,7 +85,7 @@ public class Room {
                             break;
 
                         case 'G': // donkeyKong
-                            donkeyKong = new DonkeyKong(point, 100); 
+                            donkeyKong = new DonkeyKong(point, 100,this); 
                             ImageGUI.getInstance().addImage(donkeyKong);
                             boardMap.put(point, "DonkeyKong");
                             break;
@@ -125,6 +126,22 @@ public class Room {
 
     public Map<Point2D, String> getBoardMap() {
         return boardMap;
+    }
+
+    @Override
+    public boolean isMoveValid(Point2D position) {
+        if (!ImageGUI.getInstance().isWithinBounds(position)) {
+            return false; // Fora dos limites
+        }
+
+        String target = boardMap.get(position);
+        return target == null || (!target.equals("Wall") && !target.equals("DoorClosed"));
+    }
+
+    @Override
+    public void updatePosition(Point2D oldPosition, Point2D newPosition, String elementName) {
+        boardMap.remove(oldPosition);
+        boardMap.put(newPosition, elementName);
     }
     
 }
