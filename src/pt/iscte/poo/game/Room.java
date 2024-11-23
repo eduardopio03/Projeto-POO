@@ -11,7 +11,6 @@ import objects.Stairs;
 import objects.Trap;
 import objects.Wall;
 import pt.iscte.poo.Characters.DonkeyKong;
-import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.Characters.MapHandler;
 import pt.iscte.poo.Characters.Princess;
 import pt.iscte.poo.Consumables.GoodMeat;
@@ -22,12 +21,13 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Room implements MapHandler{
 
-    private JumpMan jumpMan;
+    private GameEngine engine;
     private DonkeyKong donkeyKong;
 
     private Map<Point2D, String> boardMap = new HashMap<>();
 
-    public Room() {
+    public Room(GameEngine engine) {
+        this.engine = engine;
         File roomFile = new File("room0.txt");
         background();
         fileReader(roomFile);
@@ -38,7 +38,7 @@ public class Room implements MapHandler{
     }
 
     public void moveJumpMan(Direction direction) {
-        jumpMan.move(direction);
+        engine.getJumpMan().move(direction);
         ImageGUI.getInstance().update(); 
     }
 
@@ -65,9 +65,9 @@ public class Room implements MapHandler{
                             boardMap.put(point, "Stairs");
                             break;
 
-                            case 'H': // JumpMan
-                            jumpMan = new JumpMan(point, 10, this); // Passa o Room como MapHandler
-                            ImageGUI.getInstance().addImage(jumpMan);
+                        case 'H': // JumpMan
+                            engine.getJumpMan().setPosition(point); // Atualiza a posição inicial
+                            ImageGUI.getInstance().addImage(engine.getJumpMan());
                             boardMap.put(point, "JumpMan");
                             break;
                         
@@ -135,7 +135,7 @@ public class Room implements MapHandler{
         }
 
         String target = boardMap.get(position);
-        return target == null || (!target.equals("Wall") && !target.equals("DoorClosed"));
+        return target == null || !target.equals("Wall");
     }
 
     @Override
