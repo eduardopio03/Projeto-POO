@@ -1,5 +1,6 @@
 package pt.iscte.poo.game;
 
+import pt.iscte.poo.Characters.DonkeyKong;
 import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.observer.Observed;
@@ -52,7 +53,9 @@ public class GameEngine implements Observer {
 		System.out.println("Tic Tac : " + lastTickProcessed);
 		
         if (lastTickProcessed % 1 == 0) {
-            currentRoom.getDonkeyKong().moveRandomly();
+            for(DonkeyKong d: currentRoom.getDonkeyKong()) { //Faz todos os donkeyKongs da lista moverem 
+                d.moveRandomly();
+            }
         }
 
         lastTickProcessed++;

@@ -2,7 +2,9 @@ package pt.iscte.poo.game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import objects.DoorClosed;
@@ -22,19 +24,19 @@ import pt.iscte.poo.utils.Point2D;
 public class Room implements MapHandler{
 
     private GameEngine engine;
-    private DonkeyKong donkeyKong;
+    private List<DonkeyKong> donkeyKongs = new ArrayList<>();
 
     private Map<Point2D, String> boardMap = new HashMap<>();
 
     public Room(GameEngine engine) {
         this.engine = engine;
-        File roomFile = new File("room0.txt");
+        File roomFile = new File("room2.txt");
         background();
         fileReader(roomFile);
     }
 
-    public DonkeyKong getDonkeyKong() {
-        return donkeyKong;
+    public List<DonkeyKong> getDonkeyKong() {
+        return donkeyKongs;
     }
 
     public void moveJumpMan(Direction direction) {
@@ -85,8 +87,9 @@ public class Room implements MapHandler{
                             break;
 
                         case 'G': // donkeyKong
-                            donkeyKong = new DonkeyKong(point, 100,this); 
-                            ImageGUI.getInstance().addImage(donkeyKong);
+                            DonkeyKong donkeyKong = new DonkeyKong(point, 100,this); 
+                            ImageGUI.getInstance().addImage(donkeyKong); 
+                            donkeyKongs.add(donkeyKong); // Adiciona um donkeyKong novo à lista
                             boardMap.put(point, "DonkeyKong");
                             break;
 
