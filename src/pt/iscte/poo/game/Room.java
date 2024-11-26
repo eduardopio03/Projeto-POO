@@ -15,6 +15,7 @@ import objects.Wall;
 import pt.iscte.poo.Characters.DonkeyKong;
 import pt.iscte.poo.Characters.MapHandler;
 import pt.iscte.poo.Characters.Princess;
+import pt.iscte.poo.Consumables.Banana;
 import pt.iscte.poo.Consumables.GoodMeat;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
@@ -25,18 +26,23 @@ public class Room implements MapHandler{
 
     private GameEngine engine;
     private List<DonkeyKong> donkeyKongs = new ArrayList<>();
+    private List<Banana> bananas = new ArrayList<>();
 
     private Map<Point2D, String> boardMap = new HashMap<>();
 
     public Room(GameEngine engine) {
         this.engine = engine;
-        File roomFile = new File("room2.txt");
+        File roomFile = new File("room0.txt");
         background();
         fileReader(roomFile);
     }
 
     public List<DonkeyKong> getDonkeyKong() {
         return donkeyKongs;
+    }
+
+    public List<Banana> getBananas() {
+        return bananas;
     }
 
     public void moveJumpMan(Direction direction) {

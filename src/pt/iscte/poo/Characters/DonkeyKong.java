@@ -39,7 +39,7 @@ public class DonkeyKong extends Character {
         List<Direction> validDirections = new ArrayList<>();
         
         // Verificar quais direções são válidas
-        for (Direction direction : Direction.values()) {
+        for (Direction direction : new Direction[] { Direction.LEFT, Direction.RIGHT }) {
             Point2D newPosition = getPosition().plus(direction.asVector());
             
             // Se o movimento for válido (não for parede e dentro dos limites)
