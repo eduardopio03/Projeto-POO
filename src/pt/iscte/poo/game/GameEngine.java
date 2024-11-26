@@ -1,7 +1,10 @@
 package pt.iscte.poo.game;
 
+import java.util.ArrayList;
+import java.util.List;
 import pt.iscte.poo.Characters.DonkeyKong;
 import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.Consumables.Banana;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
@@ -55,7 +58,32 @@ public class GameEngine implements Observer {
         if (lastTickProcessed % 1 == 0) {
             for(DonkeyKong d: currentRoom.getDonkeyKong()) { //Faz todos os donkeyKongs da lista moverem 
                 d.moveRandomly();
+                //Criar uma nova banana na posição atual do donkeyKong
+                Banana banana = new Banana(d.getPosition());
+                currentRoom.getBananas().add(banana);
+                ImageGUI.getInstance().addImage(banana);
             }
+        }
+
+        //Movimentação das bananas
+        List<Banana> bananasToRemove = new ArrayList<>();
+        for (Banana banana : currentRoom.getBananas()) {
+            Point2D nextPosition = banana.getPosition().plus(Direction.DOWN.asVector());
+
+            //Verifica se a proxima posiçãpo esta fora dos limites do tabuleiro
+            if (!ImageGUI.getInstance().isWithinBounds(nextPosition)) {
+                bananasToRemove.add(banana);
+            } else {
+                //Atualiza a posicao da banana
+                banana.moveDown();
+                currentRoom.updatePosition(banana.getPosition(), nextPosition, "Banana");
+            }
+        }
+
+        //Remove as bananas que sairam do tabuleiro
+        for (Banana banana : bananasToRemove) {
+            currentRoom.getBananas().remove(banana);
+            ImageGUI.getInstance().removeImage(banana);
         }
 
         lastTickProcessed++;
