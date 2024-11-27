@@ -440,7 +440,8 @@ public class ImageGUI extends Observed {
     }
 
     public boolean isWithinBounds(Point2D p) {
-        return p.getX() >= 0 && p.getY() >= 0 && p.getX() <= width && p.getY() <= height;
+        //passei de pixels para número de imagens
+        return p.getX() >= 0 && p.getY() >= 0 && p.getX() <= 9 && p.getY() <= 9; 
     }
 
     public synchronized int keyPressed() {
