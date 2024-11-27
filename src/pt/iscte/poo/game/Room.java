@@ -142,20 +142,23 @@ public class Room implements MapHandler{
         if (!ImageGUI.getInstance().isWithinBounds(position)) {
             return false; // Fora dos limites
         }
+        // Correr a lista de elementos na posição e verificar se existe uma parede
         List<ImageTile> target = boardMap.get(position);
-        return !containsWall(position);
+        return target == null || !containsWall(position);
     }
 
     @Override
     public void updatePosition(Point2D oldPosition, Point2D newPosition, ImageTile elementName) {
-        boardMap.remove(oldPosition);
-        if (boardMap.get(newPosition) == null)
-            boardMap.put(newPosition, new ArrayList<>());
-        boardMap.get(newPosition).add(elementName);
-        if (elementName instanceof Banana) {
-            System.out.println(boardMap.get(newPosition).size());
+        // Remove o elemento da posição antiga
+        List<ImageTile> oldList = boardMap.get(oldPosition);
+        if (oldList != null) {
+            oldList.remove(elementName);
         }
+
+        // Adiciona o elemento à nova posição
+        boardMap.computeIfAbsent(newPosition, k -> new ArrayList<>()).add(elementName);
     }
+
     
     public void addObject(Point2D position, ImageTile image) {
         if (!boardMap.containsKey(position)) {
@@ -169,7 +172,6 @@ public class Room implements MapHandler{
         List<ImageTile> target = boardMap.get(position);
         for (ImageTile image : target) {
             if (image instanceof Wall) {
-                System.out.println("Parede encontrada em " + position);
                 return true;
 
             }
