@@ -28,16 +28,12 @@ public class DonkeyKong extends Character {
     }
 
     @Override
-public void move(Direction direction) {
-    Point2D nextPosition = getPosition().plus(direction.asVector());
-    if (ImageGUI.getInstance().isWithinBounds(nextPosition) && mapHandler.isMoveValid(nextPosition)) {
-        // Atualizar o tabuleiro
-        mapHandler.updatePosition(getPosition(), nextPosition, this);
-        // Atualizar a posição do DonkeyKong
-        setPosition(nextPosition);
+    public void move(Direction direction) {
+        Point2D nextPosition = getPosition().plus(direction.asVector());
+        if (ImageGUI.getInstance().isWithinBounds(nextPosition) && mapHandler.isMoveValid(nextPosition)) {
+            setPosition(nextPosition);
+        }
     }
-}
-
 
     public void moveRandomly() {
         List<Direction> validDirections = new ArrayList<>();

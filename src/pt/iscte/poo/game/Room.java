@@ -28,7 +28,7 @@ public class Room implements MapHandler{
     private List<DonkeyKong> donkeyKongs = new ArrayList<>();
     private List<Banana> bananas = new ArrayList<>();
 
-    private Map<Point2D, List<ImageTile>> boardMap = new HashMap<>();
+    private Map<Point2D, String> boardMap = new HashMap<>();
 
     public Room(GameEngine engine) {
         this.engine = engine;
@@ -64,51 +64,51 @@ public class Room implements MapHandler{
                         case 'W': // Parede
                             Wall wall = new Wall(point);
                             ImageGUI.getInstance().addImage(wall);
-                            addObject(point, wall);
+                            boardMap.put(point, "Wall");
                             break;
 
                         case 'S': // Escada
                             Stairs stairs = new Stairs(point);
                             ImageGUI.getInstance().addImage(stairs);
-                            addObject(point, stairs);
+                            boardMap.put(point, "Stairs");
                             break;
 
                         case 'H': // JumpMan
                             engine.getJumpMan().setPosition(point); // Atualiza a posição inicial
                             ImageGUI.getInstance().addImage(engine.getJumpMan());
-                            addObject(point, engine.getJumpMan());
+                            boardMap.put(point, "JumpMan");
                             break;
                         
 
                         case '0': //porta
                             DoorClosed door = new DoorClosed(point);
                             ImageGUI.getInstance().addImage(door);
-                            addObject(point, door);
+                            boardMap.put(point, "DoorClosed");
                             break;
 
                         case 't': //Trap
                             Trap trap = new Trap(point);
                             ImageGUI.getInstance().addImage(trap);
-                            addObject(point, trap);
+                            boardMap.put(point, "Trap");
                             break;
 
                         case 'G': // donkeyKong
                             DonkeyKong donkeyKong = new DonkeyKong(point, 100,this); 
                             ImageGUI.getInstance().addImage(donkeyKong); 
                             donkeyKongs.add(donkeyKong); // Adiciona um donkeyKong novo à lista
-                            addObject(point, donkeyKong);
+                            boardMap.put(point, "DonkeyKong");
                             break;
 
                         case 'm': // goodMeat
                             GoodMeat meat = new GoodMeat(point);
                             ImageGUI.getInstance().addImage(meat);
-                            addObject(point, meat);
+                            boardMap.put(point, "GoodMeat");
                             break;
 
                         case 'P': // princesa
                             Princess princess = new Princess(point);
                             ImageGUI.getInstance().addImage(princess);
-                            addObject(point, princess);
+                            boardMap.put(point, "Princess");
                             break;
 
                         default:
@@ -133,7 +133,7 @@ public class Room implements MapHandler{
         }
     }
 
-    public Map<Point2D, List<ImageTile>> getBoardMap() {
+    public Map<Point2D, String> getBoardMap() {
         return boardMap;
     }
 
@@ -142,38 +142,15 @@ public class Room implements MapHandler{
         if (!ImageGUI.getInstance().isWithinBounds(position)) {
             return false; // Fora dos limites
         }
-        List<ImageTile> target = boardMap.get(position);
-        return !containsWall(position);
+
+        String target = boardMap.get(position);
+        return target == null || !target.equals("Wall");
     }
 
     @Override
-    public void updatePosition(Point2D oldPosition, Point2D newPosition, ImageTile elementName) {
+    public void updatePosition(Point2D oldPosition, Point2D newPosition, String elementName) {
         boardMap.remove(oldPosition);
-        if (boardMap.get(newPosition) == null)
-            boardMap.put(newPosition, new ArrayList<>());
-        boardMap.get(newPosition).add(elementName);
-        if (elementName instanceof Banana) {
-            System.out.println(boardMap.get(newPosition).size());
-        }
+        boardMap.put(newPosition, elementName);
     }
     
-    public void addObject(Point2D position, ImageTile image) {
-        if (!boardMap.containsKey(position)) {
-            boardMap.put(position, new ArrayList<>());
-        }
-
-        boardMap.get(position).add(image);
-    }
-
-    public boolean containsWall(Point2D position) {
-        List<ImageTile> target = boardMap.get(position);
-        for (ImageTile image : target) {
-            if (image instanceof Wall) {
-                System.out.println("Parede encontrada em " + position);
-                return true;
-
-            }
-        }
-        return false;
-    }
 }
