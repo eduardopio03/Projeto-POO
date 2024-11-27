@@ -55,11 +55,11 @@ public class GameEngine implements Observer {
 	private void processTick() {
 		System.out.println("Tic Tac : " + lastTickProcessed);
 		
-        if (lastTickProcessed % 1 == 0) {
+        if (lastTickProcessed % 10 == 0) {
             for(DonkeyKong d: currentRoom.getDonkeyKong()) { //Faz todos os donkeyKongs da lista moverem 
                 d.moveRandomly();
                 //Criar uma nova banana na posição atual do donkeyKong
-                Banana banana = new Banana(d.getPosition());
+                Banana banana = new Banana(d.getPosition(),currentRoom);
                 currentRoom.getBananas().add(banana);
                 ImageGUI.getInstance().addImage(banana);
             }
@@ -76,7 +76,7 @@ public class GameEngine implements Observer {
             } else {
                 //Atualiza a posicao da banana
                 banana.moveDown();
-                currentRoom.updatePosition(banana.getPosition(), nextPosition, "Banana");
+                currentRoom.updatePosition(banana.getPosition(), nextPosition, banana);
             }
         }
 

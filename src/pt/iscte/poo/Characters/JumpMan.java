@@ -23,7 +23,7 @@ public class JumpMan extends Character {
 
     @Override
     public int getLayer() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class JumpMan extends Character {
         Point2D newPosition = super.getPosition().plus(direction.asVector());
 
         if (mapHandler.isMoveValid(newPosition)) {
-            mapHandler.updatePosition(super.getPosition(), newPosition, getName());
+            mapHandler.updatePosition(super.getPosition(), newPosition, this);
             super.setPosition(newPosition);
         } else {
             System.out.println("Movimento inválido para " + newPosition);
