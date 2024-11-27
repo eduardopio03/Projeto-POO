@@ -93,7 +93,7 @@ public class Room implements MapHandler{
                             break;
 
                         case 'G': // donkeyKong
-                            DonkeyKong donkeyKong = new DonkeyKong(point, 100,this); 
+                            DonkeyKong donkeyKong = new DonkeyKong(point, 100, 10, this); 
                             ImageGUI.getInstance().addImage(donkeyKong); 
                             donkeyKongs.add(donkeyKong); // Adiciona um donkeyKong novo à lista
                             addObject(point, donkeyKong);

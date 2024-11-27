@@ -21,7 +21,6 @@ public class Sword extends GoodConsumable {
 
     @Override
     public void consume(JumpMan jumpMan) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consume'");
+        jumpMan.increaseAttack(10); //Aumenta o dano do jumpMan
     }
 }

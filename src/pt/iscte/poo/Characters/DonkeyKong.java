@@ -12,8 +12,8 @@ public class DonkeyKong extends Character {
     private static final Random RANDOM = new Random();
     private final MapHandler mapHandler;
 
-    public DonkeyKong(Point2D startPosition, int initialHealth, MapHandler mapHandler) {
-        super(startPosition, initialHealth);
+    public DonkeyKong(Point2D startPosition, int initialHealth, int initialAttack, MapHandler mapHandler) {
+        super(startPosition, initialHealth, initialAttack);
         this.mapHandler = mapHandler;
     }
 

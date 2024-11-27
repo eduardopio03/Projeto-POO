@@ -7,8 +7,8 @@ public class JumpMan extends Character {
 
     private MapHandler mapHandler; // Interação com o tabuleiro
 
-    public JumpMan(Point2D initialPosition, int initialHealth, MapHandler mapHandler) {
-        super(initialPosition, initialHealth);
+    public JumpMan(Point2D initialPosition, int initialHealth, int initialAttack, MapHandler mapHandler) {
+        super(initialPosition, initialHealth, initialAttack);
         this.mapHandler = mapHandler;
     }
 
