@@ -17,6 +17,7 @@ import pt.iscte.poo.Characters.MapHandler;
 import pt.iscte.poo.Characters.Princess;
 import pt.iscte.poo.Consumables.Banana;
 import pt.iscte.poo.Consumables.GoodMeat;
+import pt.iscte.poo.Consumables.Sword;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
@@ -109,6 +110,12 @@ public class Room implements MapHandler{
                             Princess princess = new Princess(point);
                             ImageGUI.getInstance().addImage(princess);
                             addObject(point, princess);
+                            break;
+
+                        case 's': // espada
+                            Sword sword = new Sword(point);
+                            ImageGUI.getInstance().addImage(sword);
+                            addObject(point, sword);
                             break;
 
                         default:
