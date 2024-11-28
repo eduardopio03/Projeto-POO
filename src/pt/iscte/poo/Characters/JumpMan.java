@@ -1,19 +1,26 @@
 package pt.iscte.poo.Characters;
 
+import pt.iscte.poo.game.Room;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
+import pt.iscte.poo.gui.ImageTile;
 
 public class JumpMan extends Character {
 
-    private MapHandler mapHandler; // Interação com o tabuleiro
+    private Room room; // Interação com o tabuleiro
 
-    public JumpMan(Point2D initialPosition, int initialHealth, int initialAttack, MapHandler mapHandler) {
+    public JumpMan(Point2D initialPosition, int initialHealth, int initialAttack, Room room) {
         super(initialPosition, initialHealth, initialAttack);
-        this.mapHandler = mapHandler;
+        this.room = room;
     }
 
-    public void setMapHandler(MapHandler map) {
-        this.mapHandler = map;
+    public void setRoom(Room newRoom) {
+        this.room = newRoom;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 
     @Override
@@ -34,9 +41,27 @@ public class JumpMan extends Character {
 
         Point2D newPosition = super.getPosition().plus(direction.asVector());
 
-        if (mapHandler.isMoveValid(newPosition)) {
-            mapHandler.updatePosition(super.getPosition(), newPosition, this);
+        if (getRoom().isMoveValid(newPosition)) {
+            getRoom().updatePosition(super.getPosition(), newPosition, this);
             super.setPosition(newPosition);
+
+            //Verifica se há algum comsumable na posição em que o jumpman vai se mover
+            switch (getRoom().getBoardMap().get(newPosition).get(0).getName()) {
+                case "Sword":
+                    ImageTile sword = getRoom().getBoardMap().get(newPosition).get(0); 
+                    super.increaseAttack(10);  //Operação que faz a alteração dos stats
+                    ImageGUI.getInstance().removeImage(sword); //Remove o elemento
+                    break;
+                
+                case "GoodMeat":
+                    ImageTile meat = getRoom().getBoardMap().get(newPosition).get(0);
+                    super.increaseHealth(10);
+                    ImageGUI.getInstance().removeImage(meat);
+                    break;
+            
+                default:
+                    break;
+            }
         } else {
             System.out.println("Movimento inválido para " + newPosition);
         }

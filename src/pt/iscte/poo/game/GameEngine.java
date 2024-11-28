@@ -21,7 +21,7 @@ public class GameEngine implements Observer {
 		ImageGUI.getInstance().update();
         this.jumpMan = new JumpMan(new Point2D(0,0), 100, 10, currentRoom); // Jumpman é o mesmo para todos os rooms
         this.currentRoom = new Room(this); //Cria room com a GameEngine como argumento
-        jumpMan.setMapHandler(currentRoom); //Atualiza o mapHnadler já que na criação era null
+        jumpMan.setRoom(currentRoom); //Atualiza o mapHnadler já que na criação era null
 	}
 
     public JumpMan getJumpMan() {

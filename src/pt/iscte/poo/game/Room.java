@@ -33,7 +33,7 @@ public class Room implements MapHandler{
 
     public Room(GameEngine engine) {
         this.engine = engine;
-        File roomFile = new File("room0.txt");
+        File roomFile = new File("room2.txt");
         background();
         fileReader(roomFile);
     }
@@ -179,7 +179,7 @@ public class Room implements MapHandler{
     public boolean containsWall(Point2D position) {
         List<ImageTile> target = boardMap.get(position);
         for (ImageTile image : target) {
-            if (image instanceof Wall) {
+            if (image instanceof Wall || image instanceof Trap) {
 
                 return true;
 
