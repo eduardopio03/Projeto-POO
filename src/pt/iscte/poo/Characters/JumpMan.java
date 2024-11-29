@@ -51,12 +51,14 @@ public class JumpMan extends Character {
                     ImageTile sword = getRoom().getBoardMap().get(newPosition).get(0); 
                     super.increaseAttack(10);  //Operação que faz a alteração dos stats
                     ImageGUI.getInstance().removeImage(sword); //Remove o elemento
+                    getRoom().getBoardMap().get(newPosition).remove(0); //Remove do boarmap
                     break;
                 
                 case "GoodMeat":
                     ImageTile meat = getRoom().getBoardMap().get(newPosition).get(0);
                     super.increaseHealth(10);
                     ImageGUI.getInstance().removeImage(meat);
+                    getRoom().getBoardMap().get(newPosition).remove(0);
                     break;
             
                 default:

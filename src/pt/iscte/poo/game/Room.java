@@ -33,7 +33,7 @@ public class Room implements MapHandler{
 
     public Room(GameEngine engine) {
         this.engine = engine;
-        File roomFile = new File("room2.txt");
+        File roomFile = new File("room1.txt");
         background();
         fileReader(roomFile);
     }
