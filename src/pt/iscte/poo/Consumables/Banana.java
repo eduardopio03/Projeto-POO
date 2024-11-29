@@ -2,6 +2,7 @@ package pt.iscte.poo.Consumables;
 
 import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.Characters.MapHandler;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -26,7 +27,8 @@ public class Banana extends BadConsumable {
 
     @Override
     public void consume(JumpMan jumpMan) {
-        
+        jumpMan.takeDamage(10);
+        ImageGUI.getInstance().removeImage(this);
     }
 
     @Override
