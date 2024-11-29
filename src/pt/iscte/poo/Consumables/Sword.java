@@ -1,6 +1,7 @@
 package pt.iscte.poo.Consumables;
 
 import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Point2D;
 
 public class Sword extends GoodConsumable {
@@ -21,6 +22,7 @@ public class Sword extends GoodConsumable {
 
     @Override
     public void consume(JumpMan jumpMan) {
-        jumpMan.increaseAttack(10); //Aumenta o dano do jumpMan
+        jumpMan.increaseAttack(10);
+        ImageGUI.getInstance().removeImage(this);
     }
 }

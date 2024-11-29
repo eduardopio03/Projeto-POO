@@ -1,10 +1,10 @@
 package pt.iscte.poo.Characters;
 
+import pt.iscte.poo.Consumables.Consumable;
 import pt.iscte.poo.game.Room;
-import pt.iscte.poo.gui.ImageGUI;
+import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.gui.ImageTile;
 
 public class JumpMan extends Character {
 
@@ -46,22 +46,20 @@ public class JumpMan extends Character {
             super.setPosition(newPosition);
 
             //Verifica se há algum comsumable na posição em que o jumpman vai se mover
-            switch (getRoom().getBoardMap().get(newPosition).get(0).getName()) {
-                case "Sword":
-                    ImageTile sword = getRoom().getBoardMap().get(newPosition).get(0); 
-                    super.increaseAttack(10);  //Operação que faz a alteração dos stats
-                    ImageGUI.getInstance().removeImage(sword); //Remove o elemento
-                    break;
-                
-                case "GoodMeat":
-                    ImageTile meat = getRoom().getBoardMap().get(newPosition).get(0);
-                    super.increaseHealth(10);
-                    ImageGUI.getInstance().removeImage(meat);
-                    break;
-            
-                default:
-                    break;
+            if (getRoom().isMoveValid(newPosition)) {
+                getRoom().updatePosition(super.getPosition(), newPosition, this);
+                super.setPosition(newPosition);
+
+                //Verifica se há algum consumable na nova posição
+                if (!getRoom().getBoardMap().get(newPosition).isEmpty()) {
+                    ImageTile tile = getRoom().getBoardMap().get(newPosition).get(0);
+
+                    if (tile instanceof Consumable) {
+                        ((Consumable) tile).consume(this);
+                    }
+                }
             }
+            
         } else {
             System.out.println("Movimento inválido para " + newPosition);
         }

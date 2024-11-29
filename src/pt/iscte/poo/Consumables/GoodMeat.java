@@ -1,6 +1,7 @@
 package pt.iscte.poo.Consumables;
 
 import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Point2D;
 
 public class GoodMeat extends GoodConsumable {
@@ -21,8 +22,8 @@ public class GoodMeat extends GoodConsumable {
 
   @Override
   public void consume(JumpMan jumpMan) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'consume'");
+    jumpMan.increaseHealth(10);
+    ImageGUI.getInstance().removeImage(this);
   }
 
 }
