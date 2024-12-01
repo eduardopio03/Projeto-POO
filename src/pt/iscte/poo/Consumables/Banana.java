@@ -1,6 +1,7 @@
 package pt.iscte.poo.Consumables;
 
 import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
@@ -34,6 +35,7 @@ public class Banana extends BadConsumable {
     public void consume(JumpMan jumpMan) {
         jumpMan.takeDamage(10);
         ImageGUI.getInstance().removeImage(this);
+        ImageGUI.getInstance().setStatusMessage("Atingido por uma banana! Vida atual: " + jumpMan.getHealth());
     }
 
     @Override
@@ -50,8 +52,8 @@ public class Banana extends BadConsumable {
     setPosition(nextPosition);
 
     if(getRoom().getBoardMap().get(nextPosition).get(0) instanceof JumpMan) {
-        ImageTile tile = getRoom().getBoardMap().get(nextPosition).get(0);
-        consume((JumpMan) tile);
+        GameElement element = getRoom().getBoardMap().get(nextPosition).get(0);
+        consume((JumpMan) element);
     }
     if(getRoom().getBoardMap().get(nextPosition).size() > 1) {
         if(getRoom().getBoardMap().get(nextPosition).get(1) instanceof JumpMan) {
