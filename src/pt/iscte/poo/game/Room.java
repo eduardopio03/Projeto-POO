@@ -29,7 +29,7 @@ public class Room implements MapHandler{
     private List<DonkeyKong> donkeyKongs = new ArrayList<>();
     private List<Banana> bananas = new ArrayList<>();
 
-    private Map<Point2D, List<ImageTile>> boardMap = new HashMap<>();
+    private Map<Point2D, List<GameElement>> boardMap = new HashMap<>();
 
     public Room(GameEngine engine) {
         this.engine = engine;
@@ -140,7 +140,7 @@ public class Room implements MapHandler{
         }
     }
 
-    public Map<Point2D, List<ImageTile>> getBoardMap() {
+    public Map<Point2D, List<GameElement>> getBoardMap() {
         return boardMap;
     }
 
@@ -151,14 +151,14 @@ public class Room implements MapHandler{
         }
 
         // Correr a lista de elementos na posição e verificar se existe uma parede
-        List<ImageTile> target = boardMap.get(position);
+        List<GameElement> target = boardMap.get(position);
         return target == null || !containsWall(position);
     }
 
     @Override
-    public void updatePosition(Point2D oldPosition, Point2D newPosition, ImageTile elementName) {
+    public void updatePosition(Point2D oldPosition, Point2D newPosition, GameElement elementName) {
         // Remove o elemento da posição antiga
-        List<ImageTile> oldList = boardMap.get(oldPosition);
+        List<GameElement> oldList = boardMap.get(oldPosition);
         if (oldList != null) {
             oldList.remove(elementName);
         }
@@ -168,7 +168,7 @@ public class Room implements MapHandler{
     }
 
     
-    public void addObject(Point2D position, ImageTile image) {
+    public void addObject(Point2D position, GameElement image) {
         if (!boardMap.containsKey(position)) {
             boardMap.put(position, new ArrayList<>());
         }
@@ -177,8 +177,8 @@ public class Room implements MapHandler{
     }
 
     public boolean containsWall(Point2D position) {
-        List<ImageTile> target = boardMap.get(position);
-        for (ImageTile image : target) {
+        List<GameElement> target = boardMap.get(position);
+        for (GameElement image : target) {
             if (image instanceof Wall || image instanceof Trap) {
 
                 return true;

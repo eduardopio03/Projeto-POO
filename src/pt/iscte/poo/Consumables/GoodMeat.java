@@ -24,6 +24,7 @@ public class GoodMeat extends GoodConsumable {
   public void consume(JumpMan jumpMan) {
     jumpMan.increaseHealth(10);
     ImageGUI.getInstance().removeImage(this);
+    jumpMan.getRoom().getBoardMap().get(this.getPosition()).remove(this);
     ImageGUI.getInstance().setStatusMessage("Carne consumida! Vida atual: " + jumpMan.getHealth());
   }
 
