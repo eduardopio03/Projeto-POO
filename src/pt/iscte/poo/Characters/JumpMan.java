@@ -1,6 +1,8 @@
 package pt.iscte.poo.Characters;
 
 import java.util.List;
+
+import objects.DoorClosed;
 import objects.Floor;
 import objects.Stairs;
 import pt.iscte.poo.Consumables.Consumable;
@@ -107,6 +109,15 @@ public void move(Direction direction) {
         }
     
         return false; // Sem suporte
+    }
+
+    //Verifica se o JumpMan chegou à porta
+    public boolean reachedDoor() {
+        return getRoom().getBoardMap().get(getPosition()).get(0) instanceof DoorClosed; 
+    }
+
+    public boolean reachedPrincess() {
+        return getRoom().getBoardMap().get(getPosition()).get(0) instanceof Princess;
     }
     
 

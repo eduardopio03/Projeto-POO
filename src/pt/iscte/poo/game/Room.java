@@ -31,11 +31,10 @@ public class Room implements MapHandler{
 
     private Map<Point2D, List<GameElement>> boardMap = new HashMap<>();
 
-    public Room(GameEngine engine) {
+    public Room(GameEngine engine, File file) {
         this.engine = engine;
-        File roomFile = new File("room1.txt");
         background();
-        fileReader(roomFile);
+        fileReader(file);
     }
 
     public List<DonkeyKong> getDonkeyKong() {
@@ -46,8 +45,12 @@ public class Room implements MapHandler{
         return bananas;
     }
 
+    public GameEngine getEngine() {
+        return engine;
+    }
+
     public void moveJumpMan(Direction direction) {
-        engine.getJumpMan().move(direction);
+        getEngine().getJumpMan().move(direction);
         ImageGUI.getInstance().update(); 
     }
 
@@ -73,13 +76,6 @@ public class Room implements MapHandler{
                             ImageGUI.getInstance().addImage(stairs);
                             addObject(point, stairs);
                             break;
-
-                        case 'H': // JumpMan
-                            engine.getJumpMan().setPosition(point); // Atualiza a posição inicial
-                            ImageGUI.getInstance().addImage(engine.getJumpMan());
-                            addObject(point, engine.getJumpMan());
-                            break;
-                        
 
                         case '0': //porta
                             DoorClosed door = new DoorClosed(point);
@@ -120,6 +116,12 @@ public class Room implements MapHandler{
 
                         default:
                             break;
+                    }
+                    if(symbol == 'H') {
+                        // Coloca o jumpman depois de lêr o ficheiro, para não cair antes de colocar os outros elemntos
+                        getEngine().getJumpMan().setPosition(point); // Atualiza a posição inicial
+                        ImageGUI.getInstance().addImage(getEngine().getJumpMan());
+                        addObject(point, getEngine().getJumpMan());
                     }
                 }
                 y++; //Próxima linha
@@ -212,6 +214,12 @@ public class Room implements MapHandler{
             getBananas().remove(banana);
             ImageGUI.getInstance().removeImage(banana);
         }
+    }
+
+    public void removeElements() {
+        getBoardMap().clear();
+        getBananas().clear();
+        getDonkeyKong().clear();
     }
     
 }

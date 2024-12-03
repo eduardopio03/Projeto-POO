@@ -1,5 +1,7 @@
 package pt.iscte.poo.game;
 
+import java.io.File;
+
 import pt.iscte.poo.Characters.DonkeyKong;
 import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.gui.ImageGUI;
@@ -13,11 +15,12 @@ public class GameEngine implements Observer {
     private JumpMan jumpMan;
     private Room currentRoom;
     private int lastTickProcessed = 0;
+    private int roomNumber;
     
     public GameEngine() {
         ImageGUI.getInstance().update();
         this.jumpMan = new JumpMan(new Point2D(0,0), 100, 10, currentRoom); // Jumpman é o mesmo para todos os rooms
-        this.currentRoom = new Room(this); //Cria room com a GameEngine como argumento
+        this.currentRoom = new Room(this, new File("room" + roomNumber +".txt")); //Cria room com a GameEngine como argumento
         jumpMan.setRoom(currentRoom); //Atualiza o mapHnadler já que na criação era null
     }
 
@@ -45,6 +48,7 @@ public class GameEngine implements Observer {
         while (lastTickProcessed < t) {
             processTick();
         }
+
         ImageGUI.getInstance().update();
         if (jumpMan.isDead()) {
             ImageGUI.getInstance().showMessage("Game Over", "JumpMan died");
@@ -54,6 +58,21 @@ public class GameEngine implements Observer {
 
     private void processTick() {
         System.out.println("Tic Tac : " + lastTickProcessed);
+
+        if (getJumpMan().reachedDoor()) {
+            roomNumber++;
+            getJumpMan().getRoom().removeElements(); //Remove todos os elementos das listas
+            ImageGUI.getInstance().clearImages(); //Faz clear das imagens
+            this.currentRoom = new Room(this, new File("room" + roomNumber + ".txt")); //Cria um novo room
+            getJumpMan().setRoom(currentRoom);
+            ImageGUI.getInstance().update();
+        }
+
+        else if(getJumpMan().reachedPrincess()) {
+            ImageGUI.getInstance().showMessage("You Won!", "You saved the Princess");
+            getJumpMan().getRoom().removeElements();
+            ImageGUI.getInstance().dispose();
+        }
         
         jumpMan.fall();
         
