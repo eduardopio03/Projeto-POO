@@ -40,32 +40,34 @@ public class Banana extends BadConsumable {
 
     @Override
     public void move(Direction direction) {
-    Point2D nextPosition = getPosition().plus(direction.asVector());
+        Point2D nextPosition = getPosition().plus(direction.asVector());
 
-    // Atualizar o tabuleiro antes de alterar a posição
-    if (getRoom() != null) { // Verificar se o MapHandler está configurado
-        getRoom().updatePosition(getPosition(), nextPosition, this);
+        // Atualizar o tabuleiro antes de alterar a posição
+        if (getRoom() != null) { // Verificar se o MapHandler está configurado
+            getRoom().updatePosition(getPosition(), nextPosition, this);
+        }
 
-    }
+        // Atualizar a posição da Banana
+        setPosition(nextPosition);
 
-    // Atualizar a posição da Banana
-    setPosition(nextPosition);
-
-    if(getRoom().getBoardMap().get(nextPosition).get(0) instanceof JumpMan) {
-        GameElement element = getRoom().getBoardMap().get(nextPosition).get(0);
-        consume((JumpMan) element);
-    }
-    if(getRoom().getBoardMap().get(nextPosition).size() > 1) {
-        if(getRoom().getBoardMap().get(nextPosition).get(1) instanceof JumpMan) {
-            ImageTile tile = getRoom().getBoardMap().get(nextPosition).get(1);
-            consume((JumpMan) tile);
+        if (getRoom().getBoardMap().get(nextPosition).get(0) instanceof JumpMan) {
+            GameElement element = getRoom().getBoardMap().get(nextPosition).get(0);
+            consume((JumpMan) element);
+        }
+        if (getRoom().getBoardMap().get(nextPosition).size() > 1) {
+            if (getRoom().getBoardMap().get(nextPosition).get(1) instanceof JumpMan) {
+                ImageTile tile = getRoom().getBoardMap().get(nextPosition).get(1);
+                consume((JumpMan) tile);
+            }
         }
     }
-}
-
 
     public void moveDown() {
         move(Direction.DOWN);
     }
 
+    public boolean isOutOfBounds() {
+        Point2D nextPosition = getPosition().plus(Direction.DOWN.asVector());
+        return !ImageGUI.getInstance().isWithinBounds(nextPosition);
+    }
 }

@@ -197,6 +197,22 @@ public class Room implements MapHandler{
             elements.add(image);
         }
     }
+
+    public void updateBananas() {
+        List<Banana> bananasToRemove = new ArrayList<>();
+        for (Banana banana : getBananas()) {
+            if (banana.isOutOfBounds()) {
+                bananasToRemove.add(banana);
+            } else {
+                banana.moveDown();
+            }
+        }
+
+        for (Banana banana : bananasToRemove) {
+            getBananas().remove(banana);
+            ImageGUI.getInstance().removeImage(banana);
+        }
+    }
     
 }
 

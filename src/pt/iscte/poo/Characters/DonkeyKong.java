@@ -3,6 +3,8 @@ package pt.iscte.poo.Characters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import pt.iscte.poo.Consumables.Banana;
+import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
@@ -28,16 +30,15 @@ public class DonkeyKong extends Character {
     }
 
     @Override
-public void move(Direction direction) {
-    Point2D nextPosition = getPosition().plus(direction.asVector());
-    if (ImageGUI.getInstance().isWithinBounds(nextPosition) && mapHandler.isMoveValid(nextPosition)) {
-        // Atualizar o tabuleiro
-        mapHandler.updatePosition(getPosition(), nextPosition, this);
-        // Atualizar a posição do DonkeyKong
-        setPosition(nextPosition);
+    public void move(Direction direction) {
+        Point2D nextPosition = getPosition().plus(direction.asVector());
+        if (ImageGUI.getInstance().isWithinBounds(nextPosition) && mapHandler.isMoveValid(nextPosition)) {
+            // Atualizar o tabuleiro
+            mapHandler.updatePosition(getPosition(), nextPosition, this);
+            // Atualizar a posição do DonkeyKong
+            setPosition(nextPosition);
+        }
     }
-}
-
 
     public void moveRandomly() {
         List<Direction> validDirections = new ArrayList<>();
@@ -58,8 +59,10 @@ public void move(Direction direction) {
             move(validDirections.get(randomIndex));  // Mover para a direção sorteada
         }
     }
-        
 
-    
-
+    public void launchBanana() {
+        Banana banana = new Banana(getPosition(), (Room) mapHandler);
+        ((Room) mapHandler).getBananas().add(banana);
+        ImageGUI.getInstance().addImage(banana);
+    }
 }
