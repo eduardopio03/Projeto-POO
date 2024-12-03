@@ -5,7 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Wall extends StaticElement {
 
 	public Wall(Point2D point) {
-		super(point);
+		super(point,false);
 	}
 
 	@Override

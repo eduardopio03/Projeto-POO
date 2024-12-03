@@ -6,7 +6,7 @@ public class Trap extends StaticElement {
 
 
   public Trap(Point2D point) {
-    super(point);
+    super(point,false);
   }
 
   @Override

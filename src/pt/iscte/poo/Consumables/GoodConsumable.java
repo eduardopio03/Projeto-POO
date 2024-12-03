@@ -6,6 +6,6 @@ import pt.iscte.poo.utils.Point2D;
 public abstract class GoodConsumable extends GameElement implements Consumable {
 
     public GoodConsumable(Point2D position) {
-        super(position);
+        super(position,true);
     }
 }

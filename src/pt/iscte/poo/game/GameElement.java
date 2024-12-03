@@ -6,10 +6,13 @@ import pt.iscte.poo.utils.Point2D;
 
 public abstract class GameElement implements ImageTile {
 
-    private Point2D position;    
+    private Point2D position;  
+    private boolean isTransposable;  
+    
 
-    public GameElement(Point2D position) {
+    public GameElement(Point2D position, boolean isTransposable) {
         this.position = position;
+        this.isTransposable = isTransposable;
     }
 
     @Override
@@ -19,6 +22,10 @@ public abstract class GameElement implements ImageTile {
 
     public void setPosition(Point2D position) {
         this.position = position;
+    }
+
+    public boolean isTransposable() {
+        return isTransposable;
     }
 
     

@@ -6,7 +6,7 @@ public class DoorClosed extends StaticElement {
 
 
   public DoorClosed(Point2D point) {
-    super(point);
+    super(point, true);
   } 
 
   @Override

@@ -5,8 +5,8 @@ import pt.iscte.poo.utils.Point2D;
 
 public abstract class StaticElement extends GameElement {
 
-    public StaticElement(Point2D startPosition) {
-        super(startPosition);
+    public StaticElement(Point2D startPosition,boolean isTransposable) {
+        super(startPosition,isTransposable);
     }
 
 }

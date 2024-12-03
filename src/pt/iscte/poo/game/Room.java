@@ -150,9 +150,18 @@ public class Room implements MapHandler{
             return false; // Fora dos limites
         }
 
-        // Correr a lista de elementos na posição e verificar se existe uma parede
         List<GameElement> target = boardMap.get(position);
-        return target == null || !containsWall(position);
+
+        if (target == null) {
+            return true;
+        }
+
+        for (GameElement element : target) {
+            if (!element.isTransposable()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -169,24 +178,25 @@ public class Room implements MapHandler{
 
     
     public void addObject(Point2D position, GameElement image) {
+        // Inicializar a lista, se necessário
         if (!boardMap.containsKey(position)) {
             boardMap.put(position, new ArrayList<>());
         }
-
-        boardMap.get(position).add(image);
-    }
-
-    public boolean containsWall(Point2D position) {
-        List<GameElement> target = boardMap.get(position);
-        for (GameElement image : target) {
-            if (image instanceof Wall || image instanceof Trap) {
-
-                return true;
-
+    
+        // Adicionar somente se o elemento ainda não estiver presente
+        List<GameElement> elements = boardMap.get(position);
+        boolean exists = false;
+        for (GameElement element : elements) {
+            if (element.equals(image)) {
+                exists = true;
+                break;
             }
         }
-        return false;
+    
+        if (!exists) {
+            elements.add(image);
+        }
     }
-
+    
 }
 

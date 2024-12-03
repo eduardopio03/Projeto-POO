@@ -7,6 +7,6 @@ import pt.iscte.poo.utils.Point2D;
 public abstract class BadConsumable extends GameElement implements Consumable, Movable {
 
     public BadConsumable(Point2D position) {
-        super(position);
+        super(position,true);
     }
 }

@@ -5,7 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Stairs extends StaticElement {
 
   public Stairs(Point2D point) {
-    super(point);
+    super(point,true);
   }
 
   @Override

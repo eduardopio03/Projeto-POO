@@ -9,7 +9,7 @@ public abstract class Character extends GameElement implements Movable {
     private int attack;
 
     public Character(Point2D position, int health, int attack) {
-        super(position);
+        super(position,true);
         this.health = health;
         this.attack = attack;
     }
