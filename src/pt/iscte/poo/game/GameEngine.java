@@ -49,6 +49,10 @@ public class GameEngine implements Observer {
         processTick();
     }
     ImageGUI.getInstance().update();
+    if (jumpMan.isDead()) {
+        ImageGUI.getInstance().showMessage("Game Over", "JumpMan died");
+        ImageGUI.getInstance().dispose();
+    }
 }
 
 
