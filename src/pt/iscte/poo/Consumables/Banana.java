@@ -1,6 +1,7 @@
 package pt.iscte.poo.Consumables;
 
 import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.Characters.Movable;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
@@ -8,7 +9,7 @@ import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
-public class Banana extends BadConsumable {
+public class Banana extends BadConsumable implements Movable{
 
     private final Room room;
 

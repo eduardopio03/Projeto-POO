@@ -10,14 +10,18 @@ import java.util.Scanner;
 import objects.DoorClosed;
 import objects.Floor;
 import objects.Stairs;
-import objects.Trap;
 import objects.Wall;
+import pt.iscte.poo.Characters.Bat;
 import pt.iscte.poo.Characters.DonkeyKong;
 import pt.iscte.poo.Characters.MapHandler;
 import pt.iscte.poo.Characters.Princess;
+import pt.iscte.poo.Consumables.BadMeat;
 import pt.iscte.poo.Consumables.Banana;
 import pt.iscte.poo.Consumables.GoodMeat;
 import pt.iscte.poo.Consumables.Sword;
+import pt.iscte.poo.Interactables.Bomb;
+import pt.iscte.poo.Interactables.HiddenTrap;
+import pt.iscte.poo.Interactables.Trap;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
@@ -112,6 +116,30 @@ public class Room implements MapHandler{
                             Sword sword = new Sword(point);
                             ImageGUI.getInstance().addImage(sword);
                             addObject(point, sword);
+                            break;
+                        
+                        case 'B': // bomba
+                            Bomb bomb = new Bomb(point);
+                            ImageGUI.getInstance().addImage(bomb);
+                            addObject(point, bomb);
+                            break;
+
+                        case 'h': // hidden trap
+                            HiddenTrap hTrap = new HiddenTrap(point);
+                            ImageGUI.getInstance().addImage(hTrap);
+                            addObject(point, hTrap);
+                            break;
+
+                        case 'b': // morcego
+                            Bat bat = new Bat(point, 100, 10, this);
+                            ImageGUI.getInstance().addImage(bat);
+                            addObject(point, bat);
+                            break;
+
+                        case 'M': // morcego
+                            BadMeat badMeat = new BadMeat(point);
+                            ImageGUI.getInstance().addImage(badMeat);
+                            addObject(point, badMeat);
                             break;
 
                         default:

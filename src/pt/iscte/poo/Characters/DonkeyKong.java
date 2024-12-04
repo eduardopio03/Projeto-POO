@@ -9,7 +9,7 @@ import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
-public class DonkeyKong extends Character {
+public class DonkeyKong extends Enemy {
 
     private static final Random RANDOM = new Random();
     private final MapHandler mapHandler;

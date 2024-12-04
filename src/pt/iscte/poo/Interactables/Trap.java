@@ -1,5 +1,6 @@
-package objects;
+package pt.iscte.poo.Interactables;
 
+import objects.StaticElement;
 import pt.iscte.poo.utils.Point2D;
 
 public class Trap extends StaticElement {

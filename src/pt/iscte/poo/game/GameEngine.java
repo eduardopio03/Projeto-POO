@@ -28,6 +28,10 @@ public class GameEngine implements Observer {
         return jumpMan;
     }
 
+    public void setRoom(Room room) {
+        this.currentRoom = room;
+    }
+
     @Override
     public void update(Observed source) {
         if (ImageGUI.getInstance().wasKeyPressed()) {
@@ -62,8 +66,8 @@ public class GameEngine implements Observer {
         if (getJumpMan().reachedDoor()) {
             roomNumber++;
             getJumpMan().getRoom().removeElements(); //Remove todos os elementos das listas
-            ImageGUI.getInstance().clearImages(); //Faz clear das imagens
-            this.currentRoom = new Room(this, new File("room" + roomNumber + ".txt")); //Cria um novo room
+            ImageGUI.getInstance().clearImages(); //Faz clear das imagens no board
+            setRoom(new Room(this, new File("room" + roomNumber + ".txt"))); //Cria um novo room
             getJumpMan().setRoom(currentRoom);
             ImageGUI.getInstance().update();
         }
@@ -72,6 +76,7 @@ public class GameEngine implements Observer {
             ImageGUI.getInstance().showMessage("You Won!", "You saved the Princess");
             getJumpMan().getRoom().removeElements();
             ImageGUI.getInstance().dispose();
+            System.exit(0); //Termina a Main
         }
         
         jumpMan.fall();
