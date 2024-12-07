@@ -28,5 +28,9 @@ public abstract class GameElement implements ImageTile {
         return isTransposable;
     }
 
+    public void setTransposable(boolean isTransposable) {
+        this.isTransposable = isTransposable;
+    }
+
     
 }

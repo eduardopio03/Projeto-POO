@@ -1,11 +1,11 @@
 package pt.iscte.poo.Characters;
 
 import java.util.List;
-
 import objects.DoorClosed;
 import objects.Floor;
 import objects.Stairs;
 import pt.iscte.poo.Consumables.Consumable;
+import pt.iscte.poo.Interactables.Interactable;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.utils.Direction;
@@ -62,12 +62,26 @@ public void move(Direction direction) {
         getRoom().updatePosition(super.getPosition(), newPosition, this);
         super.setPosition(newPosition);
 
+        //Verifica a posição abaixo da nova posição do JumpMan
+        Point2D positionBellow = newPosition.plus(Direction.DOWN.asVector());
+        List<GameElement> elementsBelow = getRoom().getBoardMap().get(positionBellow);
+        if (elementsBelow != null) {
+            for (GameElement element : elementsBelow) {
+                if (element instanceof Interactable) {
+                    ((Interactable) element).interact(this);
+                }
+            }
+        }
+
         // Verifica e consome consumíveis na nova posição
         List<GameElement> elementsAtNewPosition = getRoom().getBoardMap().get(newPosition);
         if (elementsAtNewPosition != null) {
             for (GameElement element : elementsAtNewPosition) {
                 if (element instanceof Consumable) {
                     ((Consumable) element).consume(this);
+                }
+                if (element instanceof Interactable) {
+                    ((Interactable) element).interact(this);
                 }
             }
         }
