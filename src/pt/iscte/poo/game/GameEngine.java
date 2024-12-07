@@ -1,8 +1,6 @@
 package pt.iscte.poo.game;
 
 import java.io.File;
-
-import pt.iscte.poo.Characters.DonkeyKong;
 import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.observer.Observed;
@@ -62,7 +60,7 @@ public class GameEngine implements Observer {
 
     private void processTick() {
         System.out.println("Tic Tac : " + lastTickProcessed);
-
+    
         if (getJumpMan().reachedDoor()) {
             roomNumber++;
             getJumpMan().getRoom().removeElements(); //Remove todos os elementos das listas
@@ -71,7 +69,7 @@ public class GameEngine implements Observer {
             getJumpMan().setRoom(currentRoom);
             ImageGUI.getInstance().update();
         }
-
+    
         else if(getJumpMan().reachedPrincess()) {
             ImageGUI.getInstance().showMessage("You Won!", "You saved the Princess");
             getJumpMan().getRoom().removeElements();
@@ -82,15 +80,16 @@ public class GameEngine implements Observer {
         jumpMan.fall();
         
         if (lastTickProcessed % 2 == 0) {
-            for(DonkeyKong d: currentRoom.getDonkeyKong()) { //Faz todos os donkeyKongs da lista moverem 
-                d.moveRandomly();
-                d.launchBanana(); // Lançar uma nova banana
-            }
+            // Mover DonkeyKongs
+            currentRoom.moveDonkeyKongs();
         }
-
+    
         // Atualizar a movimentação das bananas
         currentRoom.updateBananas();
-
+    
+        // Mover morcegos
+        currentRoom.moveBats();
+    
         lastTickProcessed++;
     }
 }

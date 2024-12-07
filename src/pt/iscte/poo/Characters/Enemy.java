@@ -1,9 +1,10 @@
 package pt.iscte.poo.Characters;
 
+import pt.iscte.poo.Interactables.Interactable;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.utils.Point2D;
 
-public abstract class Enemy extends GameElement implements Movable {
+public abstract class Enemy extends GameElement implements Movable, Interactable {
 
   private int health;
   private int attack;

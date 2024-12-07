@@ -65,4 +65,10 @@ public class DonkeyKong extends Enemy {
         ((Room) mapHandler).getBananas().add(banana);
         ImageGUI.getInstance().addImage(banana);
     }
+
+    @Override
+    public void interact(JumpMan jumpMan) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'interact'");
+    }
 }

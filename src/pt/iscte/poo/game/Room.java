@@ -32,6 +32,7 @@ public class Room implements MapHandler{
     private GameEngine engine;
     private List<DonkeyKong> donkeyKongs = new ArrayList<>();
     private List<Banana> bananas = new ArrayList<>();
+    private List<Bat> bats = new ArrayList<>();
 
     private Map<Point2D, List<GameElement>> boardMap = new HashMap<>();
 
@@ -47,6 +48,23 @@ public class Room implements MapHandler{
 
     public List<Banana> getBananas() {
         return bananas;
+    }
+
+    public List<Bat> getBats() {
+        return bats;
+    }
+
+    public void moveDonkeyKongs() {
+        for (DonkeyKong donkeyKong : getDonkeyKong()) {
+            donkeyKong.moveRandomly();
+            donkeyKong.launchBanana();
+        }
+    }
+
+    public void moveBats() {
+        for (Bat bat : getBats()) {
+            bat.moveRandomly();
+        }
     }
 
     public GameEngine getEngine() {
@@ -134,6 +152,7 @@ public class Room implements MapHandler{
                             Bat bat = new Bat(point, 100, 10, this);
                             ImageGUI.getInstance().addImage(bat);
                             addObject(point, bat);
+                            bats.add(bat);
                             break;
 
                         case 'M': // morcego
