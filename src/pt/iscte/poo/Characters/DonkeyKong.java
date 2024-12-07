@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import pt.iscte.poo.Consumables.Banana;
+import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
@@ -28,6 +29,7 @@ public class DonkeyKong extends Enemy {
     public int getLayer() {
         return 2;
     }
+    
 
     @Override
     public void move(Direction direction) {
@@ -58,6 +60,14 @@ public class DonkeyKong extends Enemy {
             int randomIndex = RANDOM.nextInt(validDirections.size());
             move(validDirections.get(randomIndex));  // Mover para a direção sorteada
         }
+
+        // Verificar se o morcego está na mesma posição que o JumpMan
+        Point2D donkeyPosition = getPosition();
+        Room room = (Room) mapHandler;
+        JumpMan jumpMan = room.getEngine().getJumpMan();
+        if (donkeyPosition.equals(jumpMan.getPosition())) {
+        interact(jumpMan);
+        }
     }
 
     public void launchBanana() {
@@ -67,8 +77,20 @@ public class DonkeyKong extends Enemy {
     }
 
     @Override
-    public void interact(JumpMan jumpMan) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'interact'");
+  public void interact(JumpMan jumpMan) {
+    jumpMan.takeDamage(20);
+    super.takeDamage(jumpMan.getAttack());
+    Point2D donkeyPosition = getPosition();
+    Room room = jumpMan.getRoom();
+
+    // Remover o donkeyKong do tabuleiro
+    List<GameElement> elements = room.getBoardMap().get(donkeyPosition);
+    if (elements != null) {
+      elements.remove(this);
     }
+
+    ImageGUI.getInstance().removeImage(this);
+    room.getDonkeyKong().remove(this);
+    ImageGUI.getInstance().setStatusMessage("Interação com DonkeyKong! Vida atual: " + jumpMan.getHealth());
+  }
 }

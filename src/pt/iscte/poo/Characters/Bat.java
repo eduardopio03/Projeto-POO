@@ -3,6 +3,8 @@ package pt.iscte.poo.Characters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import pt.iscte.poo.game.GameElement;
+import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
@@ -64,15 +66,30 @@ public class Bat extends Enemy {
         move(validDirections.get(randomIndex));
       }
     }
+
+    // Verificar se o morcego está na mesma posição que o JumpMan
+    Point2D batPosition = getPosition();
+    Room room = (Room) mapHandler;
+    JumpMan jumpMan = room.getEngine().getJumpMan();
+    if (batPosition.equals(jumpMan.getPosition())) {
+      interact(jumpMan);
+    }
   }
 
   @Override
   public void interact(JumpMan jumpMan) {
     jumpMan.takeDamage(20);
+    Point2D batPosition = getPosition();
+    Room room = jumpMan.getRoom();
+
+    // Remover o morcego do tabuleiro
+    List<GameElement> elements = room.getBoardMap().get(batPosition);
+    if (elements != null) {
+      elements.remove(this);
+    }
+
     ImageGUI.getInstance().removeImage(this);
-    jumpMan.getRoom().getBoardMap().get(this.getPosition()).remove(this);
+    room.getBats().remove(this);
     ImageGUI.getInstance().setStatusMessage("Atingido por um morcego! Vida atual: " + jumpMan.getHealth());
   }
-
-  
 }

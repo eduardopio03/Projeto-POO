@@ -15,8 +15,8 @@ public class JumpMan extends Character {
 
     private Room room; // Interação com o tabuleiro
 
-    public JumpMan(Point2D initialPosition, int initialHealth, int initialAttack, Room room) {
-        super(initialPosition, initialHealth, initialAttack);
+    public JumpMan(Point2D initialPosition, int initialHealth, Room room) {
+        super(initialPosition, initialHealth, 100);
         this.room = room;
     }
 
