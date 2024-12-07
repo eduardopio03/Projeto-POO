@@ -1,5 +1,5 @@
 #0;room3.txt
-WPG  G    
+W0G  G    
 WWWWWWWWWS
          S
 SWWW tt WW

@@ -1,0 +1,11 @@
+#0;room5.txt
+P G      b 
+WWWWWWSWhW
+  b   S    
+WWhSWWWtWW
+   S      
+SWhWWWSWWW
+S     S   
+WWtSWWWWhW
+   S  H  
+WWWWWWWWWW

@@ -11,7 +11,7 @@ public class HiddenTrap extends GameElement {
 
   @Override
   public String getName() {
-    return "HiddenTrap";  
+    return "Wall";  
   }
 
   @Override
