@@ -77,6 +77,7 @@ public class Room implements MapHandler{
     }
 
     private void fileReader(File file) {
+        Point2D jumpManPosition = null;
         try (Scanner scan = new Scanner(file)) {
             int y = 0; // Linha no arquivo
             scan.nextLine(); //Saltar a primeira linha do arquivo
@@ -97,6 +98,10 @@ public class Room implements MapHandler{
                             Stairs stairs = new Stairs(point);
                             ImageGUI.getInstance().addImage(stairs);
                             addObject(point, stairs);
+                            break;
+                        
+                        case 'H': // JumpMan
+                            jumpManPosition = point;
                             break;
 
                         case '0': //porta
@@ -160,22 +165,35 @@ public class Room implements MapHandler{
                             ImageGUI.getInstance().addImage(badMeat);
                             addObject(point, badMeat);
                             break;
+                        
+                        case ' ': // Espaço vazio
+                            Floor floor = new Floor(point);
+                            ImageGUI.getInstance().addImage(floor);
+                            addObject(point, floor);
+                            break;
 
                         default:
+                            System.err.println("Caractere desconhecido '" + symbol + "' na linha " + y + ", coluna " + x + ".");
+                            Floor defaultFloor = new Floor(point);
+                            ImageGUI.getInstance().addImage(defaultFloor);
+                            addObject(point, defaultFloor);
                             break;
-                    }
-                    if(symbol == 'H') {
-                        // Coloca o jumpman depois de lêr o ficheiro, para não cair antes de colocar os outros elemntos
-                        getEngine().getJumpMan().setPosition(point); // Atualiza a posição inicial
-                        ImageGUI.getInstance().addImage(getEngine().getJumpMan());
-                        addObject(point, getEngine().getJumpMan());
                     }
                 }
                 y++; //Próxima linha
             }
+            if (jumpManPosition != null) {
+                getEngine().getJumpMan().setPosition(jumpManPosition);
+                ImageGUI.getInstance().addImage(getEngine().getJumpMan());
+                addObject(jumpManPosition, getEngine().getJumpMan());
+            }
         } 
         catch (FileNotFoundException e) {
             System.err.println("Arquivo não encontrado: " + file.getName());
+            Scanner input = new Scanner(System.in);
+            System.out.println("Indique o nome do ficheiro a ler para o próximo nível:");
+            String fileName = input.nextLine();
+            fileReader(new File(fileName));
         }   
     }
 
