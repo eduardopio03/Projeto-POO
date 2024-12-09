@@ -52,6 +52,11 @@ public class JumpMan extends Character {
 
     public void decreaseLives() {
         lives--;
+        if (lives > 0) {
+            room.getEngine().resetLevel();
+        } else {
+            room.getEngine().resetGame();
+        }
     }
 
     @Override
@@ -65,65 +70,65 @@ public class JumpMan extends Character {
     }
 
     @Override
-public void move(Direction direction) {
-    if (direction == null) {
-        throw new IllegalArgumentException("Direção inválida!");
+    public void move(Direction direction) {
+        if (direction == null) {
+            throw new IllegalArgumentException("Direção inválida!");
+        }
+
+        Point2D newPosition = super.getPosition().plus(direction.asVector());
+
+        // Verifica se o movimento é válido
+        if (getRoom().isMoveValid(newPosition)) {
+
+            // Se for um movimento para cima, verifica se há suporte
+            if (direction == Direction.UP) {
+                Point2D belowPosition = super.getPosition().plus(Direction.DOWN.asVector());
+                if (!hasSupport(belowPosition)) {
+                    System.out.println("Movimento para cima inválido: sem suporte abaixo!");
+                    return; // Bloqueia o movimento para cima
+                }
+            }
+
+            // Atualiza a posição no mapa e no jogo
+            getRoom().updatePosition(super.getPosition(), newPosition, this);
+            super.setPosition(newPosition);
+
+            // Verifica a posição abaixo da nova posição do JumpMan
+            Point2D positionBelow = newPosition.plus(Direction.DOWN.asVector());
+            List<GameElement> elementsBelow = getRoom().getBoardMap().get(positionBelow);
+            if (elementsBelow != null) {
+                for (GameElement element : elementsBelow) {
+                    if (element instanceof Interactable) {
+                        ((Interactable) element).interact(this);
+                    }
+                }
+            }
+
+            // Verifica e consome consumíveis na nova posição
+            List<GameElement> elementsAtNewPosition = getRoom().getBoardMap().get(newPosition);
+            if (elementsAtNewPosition != null) {
+                for (GameElement element : elementsAtNewPosition) {
+                    if (element instanceof Consumable) {
+                        ((Consumable) element).consume(this);
+                    }
+                    if (element instanceof Interactable) {
+                        ((Interactable) element).interact(this);
+                    }
+                }
+            }
+        } else {
+            System.out.println("Movimento inválido para " + newPosition);
+        }
     }
-
-    Point2D newPosition = super.getPosition().plus(direction.asVector());
-
-    // Verifica se o movimento é válido
-    if (getRoom().isMoveValid(newPosition)) {
-
-        // Se for um movimento para cima, verifica se há suporte
-        if (direction == Direction.UP) {
-            Point2D belowPosition = super.getPosition().plus(Direction.DOWN.asVector());
-            if (!hasSupport(belowPosition)) {
-                System.out.println("Movimento para cima inválido: sem suporte abaixo!");
-                return; // Bloqueia o movimento para cima
-            }
-        }
-
-        // Atualiza a posição no mapa e no jogo
-        getRoom().updatePosition(super.getPosition(), newPosition, this);
-        super.setPosition(newPosition);
-
-        //Verifica a posição abaixo da nova posição do JumpMan
-        Point2D positionBellow = newPosition.plus(Direction.DOWN.asVector());
-        List<GameElement> elementsBelow = getRoom().getBoardMap().get(positionBellow);
-        if (elementsBelow != null) {
-            for (GameElement element : elementsBelow) {
-                if (element instanceof Interactable) {
-                    ((Interactable) element).interact(this);
-                }
-            }
-        }
-
-        // Verifica e consome consumíveis na nova posição
-        List<GameElement> elementsAtNewPosition = getRoom().getBoardMap().get(newPosition);
-        if (elementsAtNewPosition != null) {
-            for (GameElement element : elementsAtNewPosition) {
-                if (element instanceof Consumable) {
-                    ((Consumable) element).consume(this);
-                }
-                if (element instanceof Interactable) {
-                    ((Interactable) element).interact(this);
-                }
-            }
-        }
-    } else {
-        System.out.println("Movimento inválido para " + newPosition);
-    }
-}
 
     public void fall() {
-        Point2D bellowPosition = getPosition().plus(Direction.DOWN.asVector());
+        Point2D belowPosition = getPosition().plus(Direction.DOWN.asVector());
 
-        //Verifica se a posição abaixo é válida
-        while (room.isMoveValid(bellowPosition) && !hasSupport(bellowPosition)) {
-            getRoom().updatePosition(getPosition(), bellowPosition, this);
-            super.setPosition(bellowPosition);
-            bellowPosition = bellowPosition.plus(Direction.DOWN.asVector());
+        // Verifica se a posição abaixo é válida
+        while (room.isMoveValid(belowPosition) && !hasSupport(belowPosition)) {
+            getRoom().updatePosition(getPosition(), belowPosition, this);
+            super.setPosition(belowPosition);
+            belowPosition = belowPosition.plus(Direction.DOWN.asVector());
         }
     }
 
@@ -133,11 +138,11 @@ public void move(Direction direction) {
         if (elementsBelow != null) {
             for (GameElement element : elementsBelow) {
                 if (element instanceof Floor || element instanceof Stairs) {
-                    return true; // Tem suporte: chao ou escada abaixo
+                    return true; // Tem suporte: chão ou escada abaixo
                 }
             }
         }
-    
+
         // Verifica se o JumpMan está numa escada
         List<GameElement> elementsHere = room.getBoardMap().get(super.getPosition());
         if (elementsHere != null) {
@@ -147,7 +152,7 @@ public void move(Direction direction) {
                 }
             }
         }
-    
+
         return false; // Sem suporte
     }
 

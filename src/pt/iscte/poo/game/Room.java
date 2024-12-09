@@ -33,6 +33,8 @@ public class Room implements MapHandler{
     private List<DonkeyKong> donkeyKongs = new ArrayList<>();
     private List<Banana> bananas = new ArrayList<>();
     private List<Bat> bats = new ArrayList<>();
+    private Point2D initialJumpManPosition;
+    private List<DonkeyKong> donkeyKongsToRemove = new ArrayList<>();
 
     private Map<Point2D, List<GameElement>> boardMap = new HashMap<>();
 
@@ -55,14 +57,16 @@ public class Room implements MapHandler{
     }
 
     public void moveDonkeyKongs() {
-        for (DonkeyKong donkeyKong : getDonkeyKong()) {
+        List<DonkeyKong> donkeyKongsToMove = new ArrayList<>(donkeyKongs); // Cria uma cópia da lista para evitar a modificação durante a iteração
+        for (DonkeyKong donkeyKong : donkeyKongsToMove) {
             donkeyKong.moveRandomly();
             donkeyKong.launchBanana();
         }
     }
 
     public void moveBats() {
-        for (Bat bat : getBats()) {
+        List<Bat> batsToMove = new ArrayList<>(bats); // Cria uma cópia da lista para evitar a modificação durante a iteração
+        for (Bat bat : batsToMove) {
             bat.moveRandomly();
         }
     }
@@ -102,6 +106,7 @@ public class Room implements MapHandler{
                         
                         case 'H': // JumpMan
                             jumpManPosition = point;
+                            initialJumpManPosition = point;
                             break;
 
                         case '0': //porta
@@ -197,6 +202,10 @@ public class Room implements MapHandler{
         }   
     }
 
+    public Point2D getInitialJumpManPosition() {
+        return initialJumpManPosition;
+    }
+
     private void background() {
         for (int x = 0; x < 10; x++) { //Coloco Floor em todas as posições
             for (int y = 0; y < 10; y++) {
@@ -267,16 +276,17 @@ public class Room implements MapHandler{
 
     public void updateBananas() {
         List<Banana> bananasToRemove = new ArrayList<>();
-        for (Banana banana : getBananas()) {
+        List<Banana> bananasToUpdate = new ArrayList<>(bananas); // Cria uma cópia da lista para evitar a modificação durante a iteração
+        for (Banana banana : bananasToUpdate) {
             if (banana.isOutOfBounds()) {
                 bananasToRemove.add(banana);
             } else {
                 banana.moveDown();
             }
         }
-
+    
         for (Banana banana : bananasToRemove) {
-            getBananas().remove(banana);
+            bananas.remove(banana);
             ImageGUI.getInstance().removeImage(banana);
         }
     }
@@ -292,6 +302,17 @@ public class Room implements MapHandler{
         for(Point2D p: neighbourhoodPoints) {
             getBoardMap().remove(p);
         }
+    }
+
+    public void addDonkeyKongToRemove(DonkeyKong donkeyKong) {
+        donkeyKongsToRemove.add(donkeyKong);
+    }
+
+    public void removeDonkeyKongs() {
+        for (DonkeyKong donkeyKong : donkeyKongsToRemove) {
+            donkeyKongs.remove(donkeyKong);
+        }
+        donkeyKongsToRemove.clear();
     }
     
 }

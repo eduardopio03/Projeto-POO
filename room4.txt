@@ -1,4 +1,4 @@
-#0;room5.txt
+#0;room4.txt
 P G      b 
 WWWWWWSWhW
   b   S    

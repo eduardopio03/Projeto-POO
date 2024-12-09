@@ -77,20 +77,23 @@ public class DonkeyKong extends Enemy {
     }
 
     @Override
-  public void interact(JumpMan jumpMan) {
-    jumpMan.takeDamage(20);
-    super.takeDamage(jumpMan.getAttack());
-    Point2D donkeyPosition = getPosition();
-    Room room = jumpMan.getRoom();
+    public void interact(JumpMan jumpMan) {
+        jumpMan.takeDamage(20);
+        super.takeDamage(jumpMan.getAttack());
+        Point2D donkeyPosition = getPosition();
+        Room room = jumpMan.getRoom();
 
-    // Remover o donkeyKong do tabuleiro
-    List<GameElement> elements = room.getBoardMap().get(donkeyPosition);
-    if (elements != null) {
-      elements.remove(this);
+        // Remover o donkeyKong do tabuleiro
+        List<GameElement> elements = room.getBoardMap().get(donkeyPosition);
+        if (elements != null) {
+            elements.remove(this);
+        }
+
+        // Adicionar o DonkeyKong a uma lista de remoção para ser removido após a iteração
+        room.addDonkeyKongToRemove(this);
+
+        ImageGUI.getInstance().removeImage(this);
+        ImageGUI.getInstance().setStatusMessage("Interação com DonkeyKong! Vida atual: " + jumpMan.getHealth());
     }
-
-    ImageGUI.getInstance().removeImage(this);
-    room.getDonkeyKong().remove(this);
-    ImageGUI.getInstance().setStatusMessage("Interação com DonkeyKong! Vida atual: " + jumpMan.getHealth());
-  }
+    
 }

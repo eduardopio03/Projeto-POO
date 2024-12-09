@@ -1,5 +1,6 @@
 package pt.iscte.poo.game;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.gui.ImageGUI;
@@ -7,7 +8,6 @@ import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
-import java.awt.event.KeyEvent;
 
 public class GameEngine implements Observer {
     
@@ -15,6 +15,7 @@ public class GameEngine implements Observer {
     private Room currentRoom;
     private int lastTickProcessed = 0;
     private int roomNumber;
+    private boolean levelReset = false; // Variável de controle para verificar se o nível foi reiniciado
     
     public GameEngine() {
         ImageGUI.getInstance().update();
@@ -67,11 +68,13 @@ public class GameEngine implements Observer {
         }
 
         ImageGUI.getInstance().update();
-        if (getJumpMan().isDead() && getJumpMan().getLives() <= 0) {
-            ImageGUI.getInstance().showMessage("Game Over", "JumpMan died");
-            getJumpMan().getRoom().removeElements();
-            ImageGUI.getInstance().dispose();
-            System.exit(0);
+        if (getJumpMan().isDead()) {
+            if (!levelReset) { // Verifica se o nível já foi resetado
+                getJumpMan().decreaseLives();
+                levelReset = true; // Define como true após resetar o nível
+            }
+        } else {
+            levelReset = false; // Reseta a variável se o JumpMan não estiver morto
         }
     }
 
@@ -80,22 +83,22 @@ public class GameEngine implements Observer {
     
         if (getJumpMan().reachedDoor()) {
             roomNumber++;
-            getJumpMan().getRoom().removeElements(); //Remove todos os elementos das listas
-            ImageGUI.getInstance().clearImages(); //Faz clear das imagens no board
-            setRoom(new Room(this, new File("room" + roomNumber + ".txt"))); //Cria um novo room
+            getJumpMan().getRoom().removeElements(); // Remove todos os elementos das listas
+            ImageGUI.getInstance().clearImages(); // Faz clear das imagens no board
+            setRoom(new Room(this, new File("room" + roomNumber + ".txt"))); // Cria um novo room
             getJumpMan().setRoom(getRoom());
             ImageGUI.getInstance().update();
-        }
-    
-        else if(getJumpMan().reachedPrincess()) {
+            lastTickProcessed++; // Atualiza o lastTickProcessed após resetar o nível
+            return; // Sai do método para evitar processamento adicional
+        } else if (getJumpMan().reachedPrincess()) {
             ImageGUI.getInstance().showMessage("You Won!", "You saved the Princess");
             getJumpMan().getRoom().removeElements();
             ImageGUI.getInstance().dispose();
-            System.exit(0); //Termina a Main
+            System.exit(0); // Termina a Main
         }
-        
-        getJumpMan().fall();
-        
+    
+        getJumpMan().fall(); // Certifique-se de que o método fall() está sendo chamado
+    
         if (lastTickProcessed % 2 == 0) {
             // Mover DonkeyKongs
             getRoom().moveDonkeyKongs();
@@ -106,10 +109,37 @@ public class GameEngine implements Observer {
     
         // Mover morcegos
         getRoom().moveBats();
-
-        //O jumpMan apanha a bomba
+    
+        // O jumpMan apanha a bomba
         getJumpMan().pickUpBomb();
     
+        // Remover DonkeyKongs após a iteração
+        getRoom().removeDonkeyKongs();
+    
         lastTickProcessed++;
+    }
+
+    public void resetLevel() {
+        currentRoom.removeElements(); // Remove todos os elementos do nível atual
+        ImageGUI.getInstance().clearImages(); // Limpa as imagens do tabuleiro
+        currentRoom = new Room(this, new File("room" + roomNumber + ".txt")); // Recarrega o nível atual
+        jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
+        jumpMan.setPosition(currentRoom.getInitialJumpManPosition()); // Reseta a posição do JumpMan
+        jumpMan.increaseHealth(100);; // Reseta a vida do JumpMan para 100
+        ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth());
+        lastTickProcessed = ImageGUI.getInstance().getTicks(); // Atualiza o lastTickProcessed
+        ImageGUI.getInstance().update(); // Atualiza a GUI
+    }
+    
+    public void resetGame() {
+        currentRoom.removeElements(); // Remove todos os elementos do nível atual
+        ImageGUI.getInstance().clearImages(); // Limpa as imagens do tabuleiro
+        roomNumber = 0; // Reseta o número do nível
+        currentRoom = new Room(this, new File("room0.txt")); // Recarrega o primeiro nível
+        jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
+        jumpMan.setPosition(new Point2D(0, 0)); // Reseta a posição do JumpMan
+        jumpMan.resetLives(); // Reseta as vidas do JumpMan
+        lastTickProcessed = ImageGUI.getInstance().getTicks(); // Atualiza o lastTickProcessed
+        ImageGUI.getInstance().update(); // Atualiza a GUI
     }
 }
