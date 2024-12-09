@@ -7,8 +7,8 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Bomb extends GameElement implements Interactable {
 
-  public Bomb(Point2D point) {
-    super(point, true);
+  public Bomb(Point2D point, boolean isTransposable) {
+    super(point, isTransposable);
   }
 
   @Override

@@ -31,6 +31,10 @@ public class GameEngine implements Observer {
         this.currentRoom = room;
     }
 
+    public Room getRoom() {
+        return currentRoom;
+    }
+
     @Override
     public void update(Observed source) {
         if (ImageGUI.getInstance().wasKeyPressed()) {
@@ -41,17 +45,18 @@ public class GameEngine implements Observer {
                 // Obter a direção correspondente à tecla 
                 Direction direction = Direction.directionFor(keyCode);
                 System.out.println("Moving JumpMan in direction: " + direction);
-                currentRoom.moveJumpMan(direction);
+                getRoom().moveJumpMan(direction);
+                
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid key pressed: " + keyCode);
             }
-            if(keyCode == KeyEvent.VK_D) {
+            if(keyCode == KeyEvent.VK_B) {
                 //Verifica se o jumpman tem a bomba
-                if(!jumpMan.hasBomb()) {
+                if(!getJumpMan().hasBomb()) {
                     System.out.println("Jumpman doesn't carry a bomb");
                 }
                 else {
-                    //TODO
+                    getJumpMan().dropBomb();
                 }
             }
         }
@@ -62,7 +67,7 @@ public class GameEngine implements Observer {
         }
 
         ImageGUI.getInstance().update();
-        if (jumpMan.isDead()) {
+        if (getJumpMan().isDead() && getJumpMan().getLives() <= 0) {
             ImageGUI.getInstance().showMessage("Game Over", "JumpMan died");
             getJumpMan().getRoom().removeElements();
             ImageGUI.getInstance().dispose();
@@ -78,7 +83,7 @@ public class GameEngine implements Observer {
             getJumpMan().getRoom().removeElements(); //Remove todos os elementos das listas
             ImageGUI.getInstance().clearImages(); //Faz clear das imagens no board
             setRoom(new Room(this, new File("room" + roomNumber + ".txt"))); //Cria um novo room
-            getJumpMan().setRoom(currentRoom);
+            getJumpMan().setRoom(getRoom());
             ImageGUI.getInstance().update();
         }
     
@@ -89,18 +94,21 @@ public class GameEngine implements Observer {
             System.exit(0); //Termina a Main
         }
         
-        jumpMan.fall();
+        getJumpMan().fall();
         
         if (lastTickProcessed % 2 == 0) {
             // Mover DonkeyKongs
-            currentRoom.moveDonkeyKongs();
+            getRoom().moveDonkeyKongs();
         }
     
         // Atualizar a movimentação das bananas
-        currentRoom.updateBananas();
+        getRoom().updateBananas();
     
         // Mover morcegos
-        currentRoom.moveBats();
+        getRoom().moveBats();
+
+        //O jumpMan apanha a bomba
+        getJumpMan().pickUpBomb();
     
         lastTickProcessed++;
     }

@@ -5,9 +5,11 @@ import objects.DoorClosed;
 import objects.Floor;
 import objects.Stairs;
 import pt.iscte.poo.Consumables.Consumable;
+import pt.iscte.poo.Interactables.Bomb;
 import pt.iscte.poo.Interactables.Interactable;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -46,6 +48,10 @@ public class JumpMan extends Character {
 
     public int resetLives() {
         return lives = 3;
+    }
+
+    public void decreaseLives() {
+        lives--;
     }
 
     @Override
@@ -152,6 +158,25 @@ public void move(Direction direction) {
 
     public boolean reachedPrincess() {
         return getRoom().getBoardMap().get(getPosition()).get(0) instanceof Princess;
+    }
+
+    public boolean reachedBomb() {
+        return getRoom().getBoardMap().get(getPosition()).get(0) instanceof Bomb;
+    }
+
+    public void pickUpBomb() {
+        if(reachedBomb()) {
+            setHasBomb(true);
+            GameElement bomb = getRoom().getBoardMap().get(getPosition()).get(0);
+            getRoom().getBoardMap().get(getPosition()).remove(0);
+            ImageGUI.getInstance().removeImage(bomb);
+        }
+    }
+
+    public void dropBomb() {
+        Bomb bomb = new Bomb(getPosition(), false);
+        getRoom().addObject(getPosition(), bomb);
+        ImageGUI.getInstance().addImage(bomb);
     }
     
 

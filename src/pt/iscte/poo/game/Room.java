@@ -142,7 +142,7 @@ public class Room implements MapHandler{
                             break;
                         
                         case 'B': // bomba
-                            Bomb bomb = new Bomb(point);
+                            Bomb bomb = new Bomb(point, true);
                             ImageGUI.getInstance().addImage(bomb);
                             addObject(point, bomb);
                             break;
@@ -285,6 +285,13 @@ public class Room implements MapHandler{
         getBoardMap().clear();
         getBananas().clear();
         getDonkeyKong().clear();
+    }
+
+    public void removeElementsOnExplosiobn(Point2D bombPosition) {
+        List<Point2D> neighbourhoodPoints = bombPosition.getNeighbourhoodPoints();
+        for(Point2D p: neighbourhoodPoints) {
+            getBoardMap().remove(p);
+        }
     }
     
 }
