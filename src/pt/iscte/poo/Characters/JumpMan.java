@@ -15,11 +15,13 @@ public class JumpMan extends Character {
 
     private Room room;
     private boolean hasBomb;   // Interação com o tabuleiro
+    private int lives;
 
     public JumpMan(Point2D initialPosition, int initialHealth, Room room) {
         super(initialPosition, initialHealth, 100);
         this.room = room;
         this.hasBomb = false;
+        this.lives = 3;
     }
 
     public void setRoom(Room newRoom) {
@@ -36,6 +38,14 @@ public class JumpMan extends Character {
 
     public void setHasBomb(boolean value) {
         this.hasBomb = value;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public int resetLives() {
+        return lives = 3;
     }
 
     @Override
