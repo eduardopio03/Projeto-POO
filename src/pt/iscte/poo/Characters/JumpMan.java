@@ -13,11 +13,13 @@ import pt.iscte.poo.utils.Point2D;
 
 public class JumpMan extends Character {
 
-    private Room room; // Interação com o tabuleiro
+    private Room room;
+    private boolean hasBomb;   // Interação com o tabuleiro
 
     public JumpMan(Point2D initialPosition, int initialHealth, Room room) {
         super(initialPosition, initialHealth, 100);
         this.room = room;
+        this.hasBomb = false;
     }
 
     public void setRoom(Room newRoom) {
@@ -26,6 +28,14 @@ public class JumpMan extends Character {
 
     public Room getRoom() {
         return room;
+    }
+
+    public boolean hasBomb() {
+        return hasBomb;
+    }
+
+    public void setHasBomb(boolean value) {
+        this.hasBomb = value;
     }
 
     @Override

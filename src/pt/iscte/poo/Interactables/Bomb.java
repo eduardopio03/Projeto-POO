@@ -23,7 +23,7 @@ public class Bomb extends GameElement implements Interactable {
 
   @Override
   public void interact(JumpMan jumpMan) {
-    jumpMan.takeDamage(50);
+    jumpMan.takeDamage(jumpMan.getHealth());
     ImageGUI.getInstance().removeImage(this);
     jumpMan.getRoom().getBoardMap().get(this.getPosition()).remove(this);
     ImageGUI.getInstance().setStatusMessage("Atingido por uma bomba! Vida atual: " + jumpMan.getHealth());

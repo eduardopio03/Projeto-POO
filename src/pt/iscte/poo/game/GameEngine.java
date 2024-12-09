@@ -7,6 +7,7 @@ import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
+import java.awt.event.KeyEvent;
 
 public class GameEngine implements Observer {
     
@@ -44,6 +45,15 @@ public class GameEngine implements Observer {
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid key pressed: " + keyCode);
             }
+            if(keyCode == KeyEvent.VK_D) {
+                //Verifica se o jumpman tem a bomba
+                if(!jumpMan.hasBomb()) {
+                    System.out.println("Jumpman doesn't carry a bomb");
+                }
+                else {
+                    //TODO
+                }
+            }
         }
 
         int t = ImageGUI.getInstance().getTicks();
@@ -54,7 +64,9 @@ public class GameEngine implements Observer {
         ImageGUI.getInstance().update();
         if (jumpMan.isDead()) {
             ImageGUI.getInstance().showMessage("Game Over", "JumpMan died");
+            getJumpMan().getRoom().removeElements();
             ImageGUI.getInstance().dispose();
+            System.exit(0);
         }
     }
 
