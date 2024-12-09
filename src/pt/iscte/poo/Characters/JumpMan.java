@@ -166,10 +166,10 @@ public void move(Direction direction) {
 
     public void pickUpBomb() {
         if(reachedBomb()) {
-            setHasBomb(true);
             GameElement bomb = getRoom().getBoardMap().get(getPosition()).get(0);
             getRoom().getBoardMap().get(getPosition()).remove(0);
             ImageGUI.getInstance().removeImage(bomb);
+            setHasBomb(true);
         }
     }
 
@@ -177,6 +177,7 @@ public void move(Direction direction) {
         Bomb bomb = new Bomb(getPosition(), false);
         getRoom().addObject(getPosition(), bomb);
         ImageGUI.getInstance().addImage(bomb);
+        setHasBomb(false);
     }
     
 
