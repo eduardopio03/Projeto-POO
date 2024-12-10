@@ -348,6 +348,9 @@ public class Room implements MapHandler{
                         // Remove do boardMap
                         elements.remove(element);
                     }
+                    if(!(element instanceof Wall) && !(element instanceof Stairs)) {
+                        ImageGUI.getInstance().removeImage(element);
+                    }
                 }
             }
         }
