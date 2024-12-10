@@ -23,7 +23,6 @@ import pt.iscte.poo.Interactables.Bomb;
 import pt.iscte.poo.Interactables.HiddenTrap;
 import pt.iscte.poo.Interactables.Trap;
 import pt.iscte.poo.gui.ImageGUI;
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -42,6 +41,31 @@ public class Room implements MapHandler{
         this.engine = engine;
         background();
         fileReader(file);
+    }
+
+    public void removeDonkeyKongsAtPosition(Point2D position) {
+        List<GameElement> elements = boardMap.get(position);
+        if (elements != null) {
+            elements.removeIf(element -> {
+                if (element instanceof DonkeyKong) {
+                    donkeyKongs.remove(element);
+                    return true;
+                }
+                return false;
+            });
+        }
+    }
+
+    public List<Bomb> getBombs() {
+        List<Bomb> bombs = new ArrayList<>();
+        for (List<GameElement> elements : boardMap.values()) {
+            for (GameElement element : elements) {
+                if (element instanceof Bomb) {
+                    bombs.add((Bomb) element);
+                }
+            }
+        }
+        return bombs;
     }
 
     public List<DonkeyKong> getDonkeyKong() {
@@ -147,7 +171,7 @@ public class Room implements MapHandler{
                             break;
                         
                         case 'B': // bomba
-                            Bomb bomb = new Bomb(point, true);
+                            Bomb bomb = new Bomb(point, true, this);
                             ImageGUI.getInstance().addImage(bomb);
                             addObject(point, bomb);
                             break;
@@ -210,7 +234,7 @@ public class Room implements MapHandler{
         for (int x = 0; x < 10; x++) { //Coloco Floor em todas as posições
             for (int y = 0; y < 10; y++) {
                 Point2D point = new Point2D(x, y);
-                ImageTile floor = new Floor(point);
+                Floor floor = new Floor(point);
                 ImageGUI.getInstance().addImage(floor);
             }
         }
