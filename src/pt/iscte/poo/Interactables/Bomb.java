@@ -1,7 +1,6 @@
 package pt.iscte.poo.Interactables;
 
 import java.util.List;
-import pt.iscte.poo.Characters.Enemy;
 import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
@@ -43,27 +42,15 @@ public class Bomb extends GameElement implements Interactable {
 
   public void explode() {
     Point2D bombPosition = this.getPosition();
-    List<Point2D> neighbourhoodPoints = bombPosition.getNeighbourhoodPoints();
-    neighbourhoodPoints.add(bombPosition);
+    getRoom().removeElementsOnExplosion(bombPosition);
 
-    for (Point2D point : neighbourhoodPoints) {
-        List<GameElement> elements = getRoom().getBoardMap().get(point);
-        if (elements != null) {
-            elements.removeIf(element -> {
-                if (element instanceof Enemy || element instanceof JumpMan) {
-                    ImageGUI.getInstance().removeImage(element);
-                    return true;
-                }
-                return false;
-            });
-            System.out.println("Inimigos explodidos em : " + point);
-        }
-        getRoom().removeDonkeyKongsAtPosition(point); // Remover DonkeyKongs na posição
-    }
-
+    // Remover a bomba da GUI e do mapa
     ImageGUI.getInstance().removeImage(this);
-    getRoom().getBoardMap().remove(bombPosition);
-}
+    List<GameElement> elementsAtBombPosition = getRoom().getBoardMap().get(bombPosition);
+    if (elementsAtBombPosition != null) {
+        elementsAtBombPosition.remove(this);
+    }
+  }
 
   @Override
   public void interact(JumpMan jumpMan) {

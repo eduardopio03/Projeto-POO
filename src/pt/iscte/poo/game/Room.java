@@ -13,6 +13,8 @@ import objects.Stairs;
 import objects.Wall;
 import pt.iscte.poo.Characters.Bat;
 import pt.iscte.poo.Characters.DonkeyKong;
+import pt.iscte.poo.Characters.Enemy;
+import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.Characters.MapHandler;
 import pt.iscte.poo.Characters.Princess;
 import pt.iscte.poo.Consumables.BadMeat;
@@ -321,12 +323,36 @@ public class Room implements MapHandler{
         getDonkeyKong().clear();
     }
 
-    public void removeElementsOnExplosiobn(Point2D bombPosition) {
+    public void removeElementsOnExplosion(Point2D bombPosition) {
         List<Point2D> neighbourhoodPoints = bombPosition.getNeighbourhoodPoints();
-        for(Point2D p: neighbourhoodPoints) {
-            getBoardMap().remove(p);
+        neighbourhoodPoints.add(bombPosition); // Inclui a posição da bomba na explosão
+    
+        for (Point2D point : neighbourhoodPoints) {
+            List<GameElement> elements = boardMap.get(point);
+            if (elements != null) {
+                // Cria uma cópia para evitar ConcurrentModificationException
+                List<GameElement> elementsCopy = new ArrayList<>(elements);
+    
+                for (GameElement element : elementsCopy) {
+                    if (element instanceof Enemy || element instanceof JumpMan) {
+                        // Remove da GUI
+                        ImageGUI.getInstance().removeImage(element);
+    
+                        // Remove das listas específicas
+                        if (element instanceof DonkeyKong) {
+                            donkeyKongs.remove(element);
+                        } else if (element instanceof Bat) {
+                            bats.remove(element);
+                        }
+    
+                        // Remove do boardMap
+                        elements.remove(element);
+                    }
+                }
+            }
         }
     }
+    
 
     public void addDonkeyKongToRemove(DonkeyKong donkeyKong) {
         donkeyKongsToRemove.add(donkeyKong);

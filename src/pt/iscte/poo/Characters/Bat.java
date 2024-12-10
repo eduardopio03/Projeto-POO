@@ -31,13 +31,13 @@ public class Bat extends Enemy {
 
   @Override
   public void move(Direction direction) {
-    Point2D nextPosition = getPosition().plus(direction.asVector());
+    /*Point2D nextPosition = getPosition().plus(direction.asVector());
     if (ImageGUI.getInstance().isWithinBounds(nextPosition) && mapHandler.isMoveValid(nextPosition)) {
       // Atualizar o tabuleiro
       mapHandler.updatePosition(getPosition(), nextPosition, this);
       // Atualizar a posição do morcego
       setPosition(nextPosition);
-    }
+    }*/
   }
 
   public void moveRandomly() {
