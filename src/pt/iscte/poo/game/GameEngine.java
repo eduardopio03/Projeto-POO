@@ -42,15 +42,13 @@ public class GameEngine implements Observer {
             int keyCode = ImageGUI.getInstance().keyPressed();
             System.out.println("Key pressed: " + keyCode);
 
-            try {
+            if (Direction.isDirection(keyCode)) {
                 // Obter a direção correspondente à tecla 
                 Direction direction = Direction.directionFor(keyCode);
                 System.out.println("Moving JumpMan in direction: " + direction);
                 getRoom().moveJumpMan(direction);
-                
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid key pressed: " + keyCode);
             }
+                
             if(keyCode == KeyEvent.VK_B) {
                 //Verifica se o jumpman tem a bomba
                 if(!getJumpMan().hasBomb()) {
@@ -109,9 +107,6 @@ public class GameEngine implements Observer {
     
         // Mover morcegos
         getRoom().moveBats();
-    
-        // O jumpMan apanha a bomba
-        getJumpMan().pickUpBomb();
     
         // Remover DonkeyKongs após a iteração
         getRoom().removeDonkeyKongs();

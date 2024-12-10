@@ -169,20 +169,16 @@ public class JumpMan extends Character {
         return getRoom().getBoardMap().get(getPosition()).get(0) instanceof Bomb;
     }
 
-    public void pickUpBomb() {
-        if(reachedBomb()) {
-            GameElement bomb = getRoom().getBoardMap().get(getPosition()).get(0);
-            getRoom().getBoardMap().get(getPosition()).remove(0);
-            ImageGUI.getInstance().removeImage(bomb);
-            setHasBomb(true);
-        }
+    public void pickBomb() {
+    	this.hasBomb = true;
     }
-
+    
+    
     public void dropBomb() {
-        Bomb bomb = new Bomb(getPosition(), false);
-        getRoom().addObject(getPosition(), bomb);
-        ImageGUI.getInstance().addImage(bomb);
-        setHasBomb(false);
+    	Bomb bomb = new Bomb(getPosition(), true);
+    	getRoom().addObject(getPosition(),bomb);
+    	ImageGUI.getInstance().addImage(bomb);
+    	setHasBomb(false);
     }
     
 
