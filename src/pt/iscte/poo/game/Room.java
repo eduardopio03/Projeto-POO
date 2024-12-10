@@ -19,6 +19,7 @@ import pt.iscte.poo.Characters.MapHandler;
 import pt.iscte.poo.Characters.Princess;
 import pt.iscte.poo.Consumables.BadMeat;
 import pt.iscte.poo.Consumables.Banana;
+import pt.iscte.poo.Consumables.Consumable;
 import pt.iscte.poo.Consumables.GoodMeat;
 import pt.iscte.poo.Consumables.Sword;
 import pt.iscte.poo.Interactables.Bomb;
@@ -68,6 +69,18 @@ public class Room implements MapHandler{
             }
         }
         return bombs;
+    }
+
+    public List<Consumable> getMeats() {
+        List<Consumable> meats = new ArrayList<>();
+        for (List<GameElement> elements : boardMap.values()) {
+            for (GameElement element : elements) {
+                if (element instanceof GoodMeat) {
+                    meats.add((Consumable) element);
+                }
+            }
+        }
+        return meats;
     }
 
     public List<DonkeyKong> getDonkeyKong() {
@@ -155,7 +168,7 @@ public class Room implements MapHandler{
                             break;
 
                         case 'm': // goodMeat
-                            GoodMeat meat = new GoodMeat(point);
+                            GoodMeat meat = new GoodMeat(point,this);
                             ImageGUI.getInstance().addImage(meat);
                             addObject(point, meat);
                             break;
@@ -192,7 +205,7 @@ public class Room implements MapHandler{
                             break;
 
                         case 'M': // morcego
-                            BadMeat badMeat = new BadMeat(point);
+                            BadMeat badMeat = new BadMeat(point,this);
                             ImageGUI.getInstance().addImage(badMeat);
                             addObject(point, badMeat);
                             break;

@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
 import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.Consumables.Consumable;
+import pt.iscte.poo.Consumables.GoodMeat;
 import pt.iscte.poo.Interactables.Bomb;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.observer.Observed;
@@ -113,6 +115,9 @@ public class GameEngine implements Observer {
     // Atualizar bombas
     updateBombs();
 
+    // Atualizar carnes
+    updateMeats();
+
     // Remover DonkeyKongs após a iteração
     getRoom().removeDonkeyKongs();
 
@@ -125,6 +130,15 @@ private void updateBombs() {
         bomb.incrementTicks();
         if (bomb.getTicks() >= 5) {
             bomb.explode();
+        }
+    }
+}
+
+private void updateMeats() {
+    List<Consumable> goodMeats = getRoom().getMeats();
+    for (Consumable goodMeat : goodMeats) {
+        if (goodMeat instanceof GoodMeat) {
+            ((GoodMeat) goodMeat).decreaseTicksToApodrecer();
         }
     }
 }
