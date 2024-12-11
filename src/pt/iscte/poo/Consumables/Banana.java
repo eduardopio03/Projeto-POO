@@ -5,7 +5,6 @@ import pt.iscte.poo.Characters.Movable;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -51,16 +50,13 @@ public class Banana extends BadConsumable implements Movable{
         // Atualizar a posição da Banana
         setPosition(nextPosition);
 
-        if (getRoom().getBoardMap().get(nextPosition).get(0) instanceof JumpMan) {
-            GameElement element = getRoom().getBoardMap().get(nextPosition).get(0);
-            consume((JumpMan) element);
-        }
-        if (getRoom().getBoardMap().get(nextPosition).size() > 1) {
-            if (getRoom().getBoardMap().get(nextPosition).get(1) instanceof JumpMan) {
-                ImageTile tile = getRoom().getBoardMap().get(nextPosition).get(1);
-                consume((JumpMan) tile);
+        for(int i = 0; i < getRoom().getBoardMap().get(nextPosition).size(); i++) {
+            if(getRoom().getBoardMap().get(nextPosition).get(i) instanceof JumpMan) {
+                GameElement element = getRoom().getBoardMap().get(nextPosition).get(i);
+                consume((JumpMan) element);
             }
         }
+
     }
 
     public void moveDown() {

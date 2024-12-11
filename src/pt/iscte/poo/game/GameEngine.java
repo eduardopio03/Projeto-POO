@@ -55,7 +55,7 @@ public class GameEngine implements Observer {
                 
             if(keyCode == KeyEvent.VK_B) {
                 //Verifica se o jumpman tem a bomba
-                if(!getJumpMan().hasBomb()) {
+                if(getJumpMan().hasBomb() != 1) {
                     System.out.println("Jumpman doesn't carry a bomb");
                 }
                 else {
@@ -112,8 +112,10 @@ public class GameEngine implements Observer {
     // Mover morcegos
     getRoom().moveBats();
 
-    // Atualizar bombas
-    updateBombs();
+    // Atualizar bombas só depois do jumpMan largar
+    if(getJumpMan().hasBomb() == 2) {
+        updateBombs();
+    }
 
     // Atualizar carnes
     updateMeats();

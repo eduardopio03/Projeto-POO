@@ -231,6 +231,14 @@ public class Room implements MapHandler{
                 ImageGUI.getInstance().addImage(getEngine().getJumpMan());
                 addObject(jumpManPosition, getEngine().getJumpMan());
             }
+            //Se faltar alguma linha no arquivo
+            if (y < 14) {
+                System.out.println("Falta uma linha no ficheiro");
+                ImageGUI.getInstance().dispose();
+                removeElements();
+                System.exit(0);
+            }
+            
         } 
         catch (FileNotFoundException e) {
             System.err.println("Arquivo não encontrado: " + file.getName());
@@ -238,6 +246,7 @@ public class Room implements MapHandler{
             System.out.println("Indique o nome do ficheiro a ler para o próximo nível:");
             String fileName = input.nextLine();
             fileReader(new File(fileName));
+            input.close();
         }   
     }
 
@@ -363,6 +372,7 @@ public class Room implements MapHandler{
                     }
                     if(!(element instanceof Wall) && !(element instanceof Stairs)) {
                         ImageGUI.getInstance().removeImage(element);
+                        //getBoardMap().get(element.getPosition()).get(1);
                     }
                 }
             }

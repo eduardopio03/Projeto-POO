@@ -15,14 +15,14 @@ import pt.iscte.poo.utils.Point2D;
 
 public class JumpMan extends Character {
 
-    private Room room;
-    private boolean hasBomb;   // Interação com o tabuleiro
+    private Room room;  // Interação com o tabuleiro
+    private int hasBomb;   //0: não tem a bomba | 1: tem a bomba | 2: não tem a bomba depois de largar
     private int lives;
 
     public JumpMan(Point2D initialPosition, int initialHealth, Room room) {
         super(initialPosition, initialHealth, 100);
         this.room = room;
-        this.hasBomb = false;
+        this.hasBomb = 0;
         this.lives = 3;
     }
 
@@ -34,11 +34,11 @@ public class JumpMan extends Character {
         return room;
     }
 
-    public boolean hasBomb() {
+    public int hasBomb() {
         return hasBomb;
     }
 
-    public void setHasBomb(boolean value) {
+    public void setHasBomb(int value) {
         this.hasBomb = value;
     }
 
@@ -170,7 +170,7 @@ public class JumpMan extends Character {
     }
 
     public void pickBomb() {
-    	this.hasBomb = true;
+    	setHasBomb(1);
     }
     
     
@@ -178,7 +178,7 @@ public class JumpMan extends Character {
     	Bomb bomb = new Bomb(getPosition(), true, getRoom());
     	getRoom().addObject(getPosition(),bomb);
     	ImageGUI.getInstance().addImage(bomb);
-    	setHasBomb(false);
+    	setHasBomb(2);
     }
     
 
