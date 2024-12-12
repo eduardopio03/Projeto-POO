@@ -165,7 +165,8 @@ private void updateMeats() {
         roomNumber = 0; // Reseta o número do nível
         currentRoom = new Room(this, new File("room0.txt")); // Recarrega o primeiro nível
         jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
-        jumpMan.setPosition(new Point2D(0, 0)); // Reseta a posição do JumpMan
+        jumpMan.setPosition(getRoom().getInitialJumpManPosition()); // Reseta a posição do JumpMan
+        jumpMan.increaseHealth(100); // Reseta a vida do JumpMan para 100
         jumpMan.resetLives(); // Reseta as vidas do JumpMan
         jumpMan.setHasBomb(0); // Reseta a bomba do JumpMan
         lastTickProcessed = ImageGUI.getInstance().getTicks(); // Atualiza o lastTickProcessed
