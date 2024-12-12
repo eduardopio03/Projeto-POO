@@ -81,51 +81,51 @@ public class GameEngine implements Observer {
     }
 
     private void processTick() {
-    System.out.println("Tic Tac : " + lastTickProcessed);
-
-    if (getJumpMan().reachedDoor()) {
-        roomNumber++;
-        getJumpMan().getRoom().removeElements(); // Remove todos os elementos das listas
-        ImageGUI.getInstance().clearImages(); // Faz clear das imagens no board
-        setRoom(new Room(this, new File("room" + roomNumber + ".txt"))); // Cria um novo room
-        getJumpMan().setRoom(getRoom());
-        ImageGUI.getInstance().update();
-        lastTickProcessed++; // Atualiza o lastTickProcessed após resetar o nível
-        return; // Sai do método para evitar processamento adicional
-    } else if (getJumpMan().reachedPrincess()) {
-        ImageGUI.getInstance().showMessage("You Won!", "You saved the Princess");
-        getJumpMan().getRoom().removeElements();
-        ImageGUI.getInstance().dispose();
-        System.exit(0); // Termina a Main
-    }
-
-    getJumpMan().fall(); // Certifique-se de que o método fall() está sendo chamado
-
-    if (lastTickProcessed % 2 == 0) {
-        // Mover DonkeyKongs
-        getRoom().moveDonkeyKongs();
-    }
-
-    // Atualizar a movimentação das bananas
-    getRoom().updateBananas();
-
-    // Mover morcegos
-    getRoom().moveBats();
-
-    // Atualizar bombas só depois do jumpMan largar
-    if(getJumpMan().hasBomb() == 2) {
-        updateBombs();
-    }
+        System.out.println("Tic Tac : " + lastTickProcessed);
     
-
-    // Atualizar carnes
-    updateMeats();
-
-    // Remover DonkeyKongs após a iteração
-    getRoom().removeDonkeyKongs();
-
-    lastTickProcessed++;
-}
+        if (getJumpMan().reachedDoor()) {
+            roomNumber++;
+            getJumpMan().getRoom().removeElements(); // Remove todos os elementos das listas
+            ImageGUI.getInstance().clearImages(); // Faz clear das imagens no board
+            setRoom(new Room(this, new File("room" + roomNumber + ".txt"))); // Cria um novo room
+            getJumpMan().setRoom(getRoom());
+            ImageGUI.getInstance().update();
+            lastTickProcessed++; // Atualiza o lastTickProcessed após resetar o nível
+            return; // Sai do método para evitar processamento adicional
+        } else if (getJumpMan().reachedPrincess()) {
+            ImageGUI.getInstance().showMessage("You Won!", "You saved the Princess");
+            getJumpMan().getRoom().removeElements();
+            ImageGUI.getInstance().dispose();
+            System.exit(0); // Termina a Main
+        }
+    
+        getJumpMan().fall(); // Certifique-se de que o método fall() está sendo chamado
+    
+        if (lastTickProcessed % 2 == 0) {
+            // Mover DonkeyKongs
+            getRoom().moveDonkeyKongs();
+        }
+    
+        // Atualizar a movimentação das bananas
+        getRoom().updateBananas();
+    
+        // Mover morcegos
+        getRoom().moveBats();
+    
+        // Atualizar bombas só depois do jumpMan largar
+        if(getJumpMan().hasBomb() == 2) {
+            updateBombs();
+        }
+        
+    
+        // Atualizar carnes
+        updateMeats();
+    
+        // Remover DonkeyKongs após a iteração
+        getRoom().removeDonkeyKongs();
+    
+        lastTickProcessed++;
+    }
 
 private void updateBombs() {
     List<Bomb> bombs = getRoom().getBombs();

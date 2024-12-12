@@ -80,11 +80,10 @@ public class JumpMan extends Character {
         // Verifica se o movimento é válido
         if (getRoom().isMoveValid(newPosition)) {
 
-            // Se for um movimento para cima, verifica se há suporte
+            // Se for um movimento para cima, verifica se há suporte ou se está em uma escada
             if (direction == Direction.UP) {
-                Point2D belowPosition = super.getPosition().plus(Direction.DOWN.asVector());
-                if (!hasSupport(belowPosition)) {
-                    System.out.println("Movimento para cima inválido: sem suporte abaixo!");
+                if (!isOnStairs(super.getPosition())) {
+                    System.out.println("Movimento para cima inválido: sem escada!");
                     return; // Bloqueia o movimento para cima
                 }
             }
@@ -119,12 +118,15 @@ public class JumpMan extends Character {
         } else {
             System.out.println("Movimento inválido para " + newPosition);
         }
+
+        // Após o movimento, verifica se o JumpMan deve cair
+        fall();
     }
 
     public void fall() {
         Point2D belowPosition = getPosition().plus(Direction.DOWN.asVector());
-
-        // Verifica se a posição abaixo é válida
+    
+        // Verifica se a posição abaixo é válida e se não há suporte
         while (room.isMoveValid(belowPosition) && !hasSupport(belowPosition)) {
             getRoom().updatePosition(getPosition(), belowPosition, this);
             super.setPosition(belowPosition);
@@ -133,27 +135,28 @@ public class JumpMan extends Character {
     }
 
     private boolean hasSupport(Point2D position) {
-        // Verifica elementos na posição abaixo
-        List<GameElement> elementsBelow = room.getBoardMap().get(position);
-        if (elementsBelow != null) {
-            for (GameElement element : elementsBelow) {
-                if (element instanceof Floor || element instanceof Stairs) {
-                    return true; // Tem suporte: chão ou escada abaixo
-                }
+    // Verifica elementos na posição abaixo
+    List<GameElement> elementsBelow = room.getBoardMap().get(position);
+    if (elementsBelow != null) {
+        for (GameElement element : elementsBelow) {
+            if (element instanceof Floor || element instanceof Stairs) {
+                return true; // Tem suporte: chão ou escada abaixo
             }
         }
+    }
+    return false; // Sem suporte
+}
 
-        // Verifica se o JumpMan está numa escada
-        List<GameElement> elementsHere = room.getBoardMap().get(super.getPosition());
-        if (elementsHere != null) {
-            for (GameElement element : elementsHere) {
+    private boolean isOnStairs(Point2D position) {
+        List<GameElement> elementsAtPosition = room.getBoardMap().get(position);
+        if (elementsAtPosition != null) {
+            for (GameElement element : elementsAtPosition) {
                 if (element instanceof Stairs) {
-                    return true; // Suporte presente porque está numa escada
+                    return true; // Está em uma escada
                 }
             }
         }
-
-        return false; // Sem suporte
+        return false; // Não está em uma escada
     }
 
     //Verifica se o JumpMan chegou à porta
