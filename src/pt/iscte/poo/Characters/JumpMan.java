@@ -2,8 +2,8 @@ package pt.iscte.poo.Characters;
 
 import java.util.List;
 import objects.DoorClosed;
-import objects.Floor;
 import objects.Stairs;
+import objects.Wall;
 import pt.iscte.poo.Consumables.Consumable;
 import pt.iscte.poo.Interactables.Bomb;
 import pt.iscte.poo.Interactables.Interactable;
@@ -118,9 +118,6 @@ public class JumpMan extends Character {
         } else {
             System.out.println("Movimento inválido para " + newPosition);
         }
-
-        // Após o movimento, verifica se o JumpMan deve cair
-        fall();
     }
 
     public void fall() {
@@ -132,6 +129,7 @@ public class JumpMan extends Character {
             super.setPosition(belowPosition);
             belowPosition = belowPosition.plus(Direction.DOWN.asVector());
         }
+        System.out.println("Falling: " + getPosition());
     }
 
     private boolean hasSupport(Point2D position) {
@@ -139,7 +137,7 @@ public class JumpMan extends Character {
     List<GameElement> elementsBelow = room.getBoardMap().get(position);
     if (elementsBelow != null) {
         for (GameElement element : elementsBelow) {
-            if (element instanceof Floor || element instanceof Stairs) {
+            if (element instanceof Wall || element instanceof Stairs) {
                 return true; // Tem suporte: chão ou escada abaixo
             }
         }
