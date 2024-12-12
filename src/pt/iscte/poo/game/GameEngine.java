@@ -116,6 +116,7 @@ public class GameEngine implements Observer {
     if(getJumpMan().hasBomb() == 2) {
         updateBombs();
     }
+    
 
     // Atualizar carnes
     updateMeats();
@@ -152,6 +153,7 @@ private void updateMeats() {
         jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
         jumpMan.setPosition(currentRoom.getInitialJumpManPosition()); // Reseta a posição do JumpMan
         jumpMan.increaseHealth(100);; // Reseta a vida do JumpMan para 100
+        jumpMan.setHasBomb(0); // Reseta a bomba do JumpMan
         ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth());
         lastTickProcessed = ImageGUI.getInstance().getTicks(); // Atualiza o lastTickProcessed
         ImageGUI.getInstance().update(); // Atualiza a GUI
@@ -165,6 +167,7 @@ private void updateMeats() {
         jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
         jumpMan.setPosition(new Point2D(0, 0)); // Reseta a posição do JumpMan
         jumpMan.resetLives(); // Reseta as vidas do JumpMan
+        jumpMan.setHasBomb(0); // Reseta a bomba do JumpMan
         lastTickProcessed = ImageGUI.getInstance().getTicks(); // Atualiza o lastTickProcessed
         ImageGUI.getInstance().update(); // Atualiza a GUI
     }

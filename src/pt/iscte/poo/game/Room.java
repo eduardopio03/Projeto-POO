@@ -343,6 +343,7 @@ public class Room implements MapHandler{
         getBoardMap().clear();
         getBananas().clear();
         getDonkeyKong().clear();
+        
     }
 
     public void removeElementsOnExplosion(Point2D bombPosition) {
@@ -359,6 +360,9 @@ public class Room implements MapHandler{
                     if (element instanceof Enemy || element instanceof JumpMan) {
                         // Remove da GUI
                         ImageGUI.getInstance().removeImage(element);
+                        if (element instanceof JumpMan) {
+                            getEngine().getJumpMan().takeDamage(100);
+                        }
     
                         // Remove das listas específicas
                         if (element instanceof DonkeyKong) {
