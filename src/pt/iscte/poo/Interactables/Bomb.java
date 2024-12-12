@@ -1,6 +1,7 @@
 package pt.iscte.poo.Interactables;
 
 import java.util.List;
+import pt.iscte.poo.Characters.Enemy;
 import pt.iscte.poo.Characters.JumpMan;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
@@ -58,6 +59,17 @@ public class Bomb extends GameElement implements Interactable {
     ImageGUI.getInstance().removeImage(this);
     jumpMan.getRoom().getBoardMap().get(this.getPosition()).remove(this);
     ImageGUI.getInstance().setStatusMessage("Atingido por uma bomba! Vida atual: " + jumpMan.getHealth());
+  }
+
+  public void interact(Enemy enemy) {
+    enemy.takeDamage(100);
+    if (enemy.isDead()) {
+        ImageGUI.getInstance().removeImage(enemy);
+        room.getBoardMap().get(enemy.getPosition()).remove(enemy);
+        ImageGUI.getInstance().setStatusMessage("DonkeyKong morto!");
+    }
+    ImageGUI.getInstance().removeImage(this);
+    room.getBoardMap().get(this.getPosition()).remove(this);
   }
 
 }

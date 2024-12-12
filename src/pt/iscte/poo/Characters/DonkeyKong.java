@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import pt.iscte.poo.Consumables.Banana;
+import pt.iscte.poo.Interactables.Bomb;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
@@ -61,12 +62,20 @@ public class DonkeyKong extends Enemy {
             move(validDirections.get(randomIndex));  // Mover para a direção sorteada
         }
 
-        // Verificar se o morcego está na mesma posição que o JumpMan
+        // Verificar se o DonkeyKong está na mesma posição que o JumpMan
         Point2D donkeyPosition = getPosition();
         Room room = (Room) mapHandler;
         JumpMan jumpMan = room.getEngine().getJumpMan();
         if (donkeyPosition.equals(jumpMan.getPosition())) {
         interact(jumpMan);
+        }
+
+        // Verificar se o donkeyKpong esta na mesma posição que a bomba
+        List<Bomb> bombs = room.getBombs();
+        for (Bomb bomb : bombs) {
+            if (donkeyPosition.equals(bomb.getPosition())) {
+                bomb.interact(this);  // Chamar o método interact da bomba para DonkeyKong
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package pt.iscte.poo.Characters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import pt.iscte.poo.Interactables.Bomb;
 import pt.iscte.poo.game.GameElement;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
@@ -74,6 +75,13 @@ public class Bat extends Enemy {
     if (batPosition.equals(jumpMan.getPosition())) {
       interact(jumpMan);
     }
+
+    List<Bomb> bombs = room.getBombs();
+        for (Bomb bomb : bombs) {
+            if (batPosition.equals(bomb.getPosition())) {
+                bomb.interact(this);  // Chamar o método interact da bomba para DonkeyKong
+            }
+        }
   }
 
   @Override
