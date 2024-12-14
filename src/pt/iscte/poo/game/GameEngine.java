@@ -117,7 +117,6 @@ public class GameEngine implements Observer {
             updateBombs();
         }
         
-    
         // Atualizar carnes
         updateMeats();
     
@@ -148,15 +147,16 @@ private void updateMeats() {
 
 public void resetLevel() {
     // Reposiciona o JumpMan na posição inicial
-    jumpMan.setPosition(currentRoom.getInitialJumpManPosition());
-    jumpMan.increaseHealth(100); // Restaura a vida para 100
-    jumpMan.setHasBomb(0); // Reseta a quantidade de bombas
+    getJumpMan().setPosition(currentRoom.getInitialJumpManPosition());
+    getJumpMan().increaseHealth(100); // Restaura a vida para 100
+    getJumpMan().setHasBomb(0); // Reseta a quantidade de bombas
     
     // Remove as bananas
-    currentRoom.getBananas().clear();
+    getRoom().removeImagesBananas(getRoom().getBananas());
+    getRoom().getBananas().clear();
     
     // Recarrega as bananas
-    currentRoom.updateBananas();
+    getRoom().updateBananas();
     
     // Atualiza a interface gráfica
     ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth());
@@ -169,6 +169,8 @@ public void resetLevel() {
         ImageGUI.getInstance().clearImages(); // Limpa as imagens do tabuleiro
         roomNumber = 0; // Reseta o número do nível
         currentRoom = new Room(this, new File("room0.txt")); // Recarrega o primeiro nível
+        this.jumpMan = new JumpMan(new Point2D(0, 0), 100, currentRoom);
+        setRoom(new Room(this, new File("room" + roomNumber + ".txt")));
         jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
         jumpMan.setPosition(getRoom().getInitialJumpManPosition()); // Reseta a posição do JumpMan
         jumpMan.increaseHealth(100); // Reseta a vida do JumpMan para 100

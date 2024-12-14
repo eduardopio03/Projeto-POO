@@ -394,6 +394,12 @@ public class Room implements MapHandler{
         }
         donkeyKongsToRemove.clear();
     }
+
+    public void removeImagesBananas(List<Banana> imagesToRemove) {
+        for(Banana g: imagesToRemove) {
+            ImageGUI.getInstance().removeImage(g);
+        }
+    }
     
 }
 
