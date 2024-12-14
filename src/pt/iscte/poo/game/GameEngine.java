@@ -2,8 +2,10 @@ package pt.iscte.poo.game;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import pt.iscte.poo.Characters.JumpMan;
+import pt.iscte.poo.Consumables.Banana;
 import pt.iscte.poo.Consumables.Consumable;
 import pt.iscte.poo.Consumables.GoodMeat;
 import pt.iscte.poo.Interactables.Bomb;
@@ -153,11 +155,16 @@ public void resetLevel() {
     getJumpMan().setHasBomb(0); // Reseta a quantidade de bombas
     
     // Remove as bananas
-    getRoom().removeImagesBananas(getRoom().getBananas());
+    List<Banana> bananasToRemove = new ArrayList<>(getRoom().getBananas());
+    for (Banana banana : bananasToRemove) {
+        Point2D position = banana.getPosition();
+        List<GameElement> elements = getRoom().getBoardMap().get(position);
+        if (elements != null) {
+            elements.remove(banana);
+        }
+        ImageGUI.getInstance().removeImage(banana);
+    }
     getRoom().getBananas().clear();
-    
-    // Recarrega as bananas
-    getRoom().updateBananas();
     
     // Atualiza a interface gráfica
     ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth());

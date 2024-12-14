@@ -10,6 +10,7 @@ import java.util.Scanner;
 import objects.DoorClosed;
 import objects.Floor;
 import objects.Stairs;
+import objects.StaticElement;
 import objects.Wall;
 import pt.iscte.poo.Characters.Bat;
 import pt.iscte.poo.Characters.DonkeyKong;
@@ -374,7 +375,7 @@ public class Room implements MapHandler{
                         // Remove do boardMap
                         elements.remove(element);
                     }
-                    if(!(element instanceof Wall) && !(element instanceof Stairs)) {
+                    if(!(element instanceof StaticElement)) {
                         ImageGUI.getInstance().removeImage(element);
                         //getBoardMap().get(element.getPosition()).get(1);
                     }
