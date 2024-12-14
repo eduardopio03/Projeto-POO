@@ -26,6 +26,10 @@ public abstract class Character extends GameElement implements Movable {
         health -= value;
     }
 
+    public void resetAttack() {
+        attack = 100;
+    }
+
     public void increaseHealth(int value) {
         health += value;
     }

@@ -43,44 +43,44 @@ public class GameEngine implements Observer {
     }
 
     @Override
-    public void update(Observed source) {
-        if (ImageGUI.getInstance().wasKeyPressed()) {
-            int keyCode = ImageGUI.getInstance().keyPressed();
-            System.out.println("Key pressed: " + keyCode);
+public void update(Observed source) {
+    if (ImageGUI.getInstance().wasKeyPressed()) {
+        int keyCode = ImageGUI.getInstance().keyPressed();
+        System.out.println("Key pressed: " + keyCode);
 
-            if (Direction.isDirection(keyCode)) {
-                // Obter a direção correspondente à tecla 
-                Direction direction = Direction.directionFor(keyCode);
-                System.out.println("Moving JumpMan in direction: " + direction);
-                getRoom().moveJumpMan(direction);
-            }
-                
-            if(keyCode == KeyEvent.VK_B) {
-                //Verifica se o jumpman tem a bomba
-                if(getJumpMan().hasBomb() != 1) {
-                    System.out.println("Jumpman doesn't carry a bomb");
-                }
-                else {
-                    getJumpMan().dropBomb();
-                }
-            }
+        if (Direction.isDirection(keyCode)) {
+            // Obter a direção correspondente à tecla 
+            Direction direction = Direction.directionFor(keyCode);
+            System.out.println("Moving JumpMan in direction: " + direction);
+            getRoom().moveJumpMan(direction);
         }
-
-        int t = ImageGUI.getInstance().getTicks();
-        while (lastTickProcessed < t) {
-            processTick();
-        }
-
-        ImageGUI.getInstance().update();
-        if (getJumpMan().isDead()) {
-            if (!levelReset) { // Verifica se o nível já foi resetado
-                getJumpMan().decreaseLives();
-                levelReset = true; // Define como true após resetar o nível
+            
+        if(keyCode == KeyEvent.VK_B) {
+            //Verifica se o jumpman tem a bomba
+            if(getJumpMan().hasBomb() != 1) {
+                System.out.println("Jumpman doesn't carry a bomb");
             }
-        } else {
-            levelReset = false; // Reseta a variável se o JumpMan não estiver morto
+            else {
+                getJumpMan().dropBomb();
+            }
         }
     }
+
+    int t = ImageGUI.getInstance().getTicks();
+    while (lastTickProcessed < t) {
+        processTick();
+    }
+
+    ImageGUI.getInstance().update();
+    if (getJumpMan().isDead()) {
+        if (!levelReset) { // Verifica se o nível já foi resetado
+            getJumpMan().decreaseLives();
+            levelReset = true; // Define como true após resetar o nível
+        }
+    } else {
+        levelReset = false; // Reseta a variável se o JumpMan não estiver morto
+    }
+}
 
     private void processTick() {
         System.out.println("Tic Tac : " + lastTickProcessed);
@@ -181,7 +181,9 @@ public void resetLevel() {
         jumpMan.setPosition(getRoom().getInitialJumpManPosition()); // Reseta a posição do JumpMan
         jumpMan.increaseHealth(100); // Reseta a vida do JumpMan para 100
         jumpMan.resetLives(); // Reseta as vidas do JumpMan
+        jumpMan.resetAttack(); // Reseta o ataque do JumpMan
         jumpMan.setHasBomb(0); // Reseta a bomba do JumpMan
+        ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth() + " Vidas restantes: " + jumpMan.getLives()); // Atualiza a mensagem de status
         lastTickProcessed = ImageGUI.getInstance().getTicks(); // Atualiza o lastTickProcessed
         ImageGUI.getInstance().update(); // Atualiza a GUI
     }
