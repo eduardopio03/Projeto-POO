@@ -102,7 +102,7 @@ public class DonkeyKong extends Enemy {
         room.addDonkeyKongToRemove(this);
 
         ImageGUI.getInstance().removeImage(this);
-        ImageGUI.getInstance().setStatusMessage("Interação com DonkeyKong! Vida atual: " + jumpMan.getHealth());
+        ImageGUI.getInstance().setStatusMessage("O DonkeyKong atacou-te! Vida atual: " + jumpMan.getHealth());
     }
     
 }
