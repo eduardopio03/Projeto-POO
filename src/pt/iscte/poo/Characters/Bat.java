@@ -48,7 +48,7 @@ public class Bat extends Enemy {
     for (Direction direction : new Direction[] {
       Direction.LEFT,
       Direction.RIGHT,
-      Direction.DOWN // Adicionar a direção DOWN
+      Direction.DOWN 
     }) {
       Point2D newPosition = getPosition().plus(direction.asVector());
 
@@ -79,7 +79,7 @@ public class Bat extends Enemy {
     List<Bomb> bombs = room.getBombs();
         for (Bomb bomb : bombs) {
             if (batPosition.equals(bomb.getPosition())) {
-                bomb.interact(this);  // Chamar o método interact da bomba para DonkeyKong
+                bomb.interact(this);  // interact da bomba para DonkeyKong
             }
         }
   }

@@ -70,11 +70,11 @@ public class DonkeyKong extends Enemy {
         interact(jumpMan);
         }
 
-        // Verificar se o donkeyKpong esta na mesma posição que a bomba
+        // Verificar se o donkeyKong esta na mesma posição que a bomba
         List<Bomb> bombs = room.getBombs();
         for (Bomb bomb : bombs) {
             if (donkeyPosition.equals(bomb.getPosition())) {
-                bomb.interact(this);  // Chamar o método interact da bomba para DonkeyKong
+                bomb.interact(this);  // interact da bomba para DonkeyKong
             }
         }
     }

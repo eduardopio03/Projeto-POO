@@ -205,7 +205,7 @@ public class Room implements MapHandler{
                             bats.add(bat);
                             break;
 
-                        case 'M': // morcego
+                        case 'M': // carne estragada
                             BadMeat badMeat = new BadMeat(point,this);
                             ImageGUI.getInstance().addImage(badMeat);
                             addObject(point, badMeat);

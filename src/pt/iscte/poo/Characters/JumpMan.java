@@ -80,7 +80,7 @@ public class JumpMan extends Character {
         // Verifica se o movimento é válido
         if (getRoom().isMoveValid(newPosition)) {
 
-            // Se for um movimento para cima, verifica se há suporte ou se está em uma escada
+            // Se for um movimento para cima, verifica se há suporte ou se está numa escada
             if (direction == Direction.UP) {
                 if (!isOnStairs(super.getPosition())) {
                     System.out.println("Movimento para cima inválido: sem escada!");
@@ -103,7 +103,7 @@ public class JumpMan extends Character {
                 }
             }
 
-            // Verifica e consome consumíveis na nova posição
+            // Verifica e consome consumíveis e interactables na nova posição
             List<GameElement> elementsAtNewPosition = getRoom().getBoardMap().get(newPosition);
             if (elementsAtNewPosition != null) {
                 for (GameElement element : elementsAtNewPosition) {
@@ -154,7 +154,7 @@ public class JumpMan extends Character {
                 }
             }
         }
-        return false; // Não está em uma escada
+        return false; // Não está numa escada
     }
 
     //Verifica se o JumpMan chegou à porta

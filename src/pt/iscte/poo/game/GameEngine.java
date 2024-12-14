@@ -101,7 +101,7 @@ public void update(Observed source) {
             System.exit(0); // Termina a Main
         }
     
-        getJumpMan().fall(); // Certifique-se de que o método fall() está sendo chamado
+        getJumpMan().fall();
     
         if (lastTickProcessed % 2 == 0) {
             // Mover DonkeyKongs
