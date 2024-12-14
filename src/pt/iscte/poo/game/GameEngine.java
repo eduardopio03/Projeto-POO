@@ -132,6 +132,7 @@ private void updateBombs() {
         bomb.incrementTicks();
         if (bomb.getTicks() >= 5) {
             bomb.explode();
+            getJumpMan().setHasBomb(0);
         }
     }
 }
@@ -169,8 +170,6 @@ public void resetLevel() {
         ImageGUI.getInstance().clearImages(); // Limpa as imagens do tabuleiro
         roomNumber = 0; // Reseta o número do nível
         currentRoom = new Room(this, new File("room0.txt")); // Recarrega o primeiro nível
-        this.jumpMan = new JumpMan(new Point2D(0, 0), 100, currentRoom);
-        setRoom(new Room(this, new File("room" + roomNumber + ".txt")));
         jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
         jumpMan.setPosition(getRoom().getInitialJumpManPosition()); // Reseta a posição do JumpMan
         jumpMan.increaseHealth(100); // Reseta a vida do JumpMan para 100
