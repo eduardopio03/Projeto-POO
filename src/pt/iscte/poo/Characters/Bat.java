@@ -98,6 +98,6 @@ public class Bat extends Enemy {
 
     ImageGUI.getInstance().removeImage(this);
     room.getBats().remove(this);
-    ImageGUI.getInstance().setStatusMessage("Atingido por um morcego! Vida atual: " + jumpMan.getHealth());
+    ImageGUI.getInstance().setStatusMessage("Atingido por um morcego! Vida atual: " + jumpMan.getHealth() + " Vidas restantes: " + jumpMan.getLives());
   }
 }
