@@ -30,7 +30,7 @@ public class Trap extends StaticElement implements Interactable {
   @Override
   public void interact(JumpMan jumpMan) {
     jumpMan.takeDamage(10);
-    ImageGUI.getInstance().setStatusMessage("Atingido por uma armadilha! Vida atual: " + jumpMan.getHealth());
+    ImageGUI.getInstance().setStatusMessage("Atingido por uma armadilha! Vida atual: " + jumpMan.getHealth() + " Vidas restantes: " + jumpMan.getLives());
   }
 
 }

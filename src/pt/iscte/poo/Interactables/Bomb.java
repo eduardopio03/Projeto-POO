@@ -66,7 +66,7 @@ public class Bomb extends GameElement implements Interactable {
     if (enemy.isDead()) {
         ImageGUI.getInstance().removeImage(enemy);
         room.getBoardMap().get(enemy.getPosition()).remove(enemy);
-        ImageGUI.getInstance().setStatusMessage("DonkeyKong morto!");
+        ImageGUI.getInstance().setStatusMessage("Inimigo morto!");
     }
     ImageGUI.getInstance().removeImage(this);
     room.getBoardMap().get(this.getPosition()).remove(this);

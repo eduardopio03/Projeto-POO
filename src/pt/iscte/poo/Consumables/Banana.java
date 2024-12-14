@@ -35,7 +35,7 @@ public class Banana extends BadConsumable implements Movable{
     public void consume(JumpMan jumpMan) {
         jumpMan.takeDamage(10);
         ImageGUI.getInstance().removeImage(this);
-        ImageGUI.getInstance().setStatusMessage("Atingido por uma banana! Vida atual: " + jumpMan.getHealth());
+        ImageGUI.getInstance().setStatusMessage("Atingido por uma banana! Vida atual: " + jumpMan.getHealth() + " Vidas restantes: " + jumpMan.getLives());
     }
 
     @Override

@@ -45,7 +45,7 @@ public class GoodMeat extends GoodConsumable {
     jumpMan.increaseHealth(10);
     ImageGUI.getInstance().removeImage(this);
     jumpMan.getRoom().getBoardMap().get(this.getPosition()).remove(this);
-    ImageGUI.getInstance().setStatusMessage("Carne consumida! Vida atual: " + jumpMan.getHealth());
+    ImageGUI.getInstance().setStatusMessage("Carne consumida! Vida atual: " + jumpMan.getHealth() + " Vidas restantes: " + jumpMan.getLives());
   }
 
   // A carne apodrece se não for consumida em 10 ticks

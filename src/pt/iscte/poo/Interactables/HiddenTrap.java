@@ -24,7 +24,7 @@ public class HiddenTrap extends GameElement implements Interactable {
   @Override
   public void interact(JumpMan jumpMan) {
     jumpMan.takeDamage(10);
-    ImageGUI.getInstance().setStatusMessage("Atingido por uma armadilha escondida! Vida atual: " + jumpMan.getHealth());
+    ImageGUI.getInstance().setStatusMessage("Atingido por uma armadilha escondida! Vida atual: " + jumpMan.getHealth() + " Vidas restantes: " + jumpMan.getLives());
     // Como ja foi descoberta, torna-se numa Trap normal
     Trap trap = new Trap(getPosition());
     ImageGUI.getInstance().addImage(trap);

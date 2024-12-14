@@ -25,6 +25,6 @@ public class Sword extends GoodConsumable {
         jumpMan.increaseAttack(100);
         ImageGUI.getInstance().removeImage(this);
         jumpMan.getRoom().getBoardMap().get(this.getPosition()).remove(this);
-        ImageGUI.getInstance().setStatusMessage("Espada apanhada! Ataque atual: " + jumpMan.getAttack());
+        ImageGUI.getInstance().setStatusMessage("Espada apanhada! Ataque atual: " + jumpMan.getAttack() + " Vidas restantes: " + jumpMan.getLives());
     }
 }
