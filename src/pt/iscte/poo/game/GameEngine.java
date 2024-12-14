@@ -165,6 +165,7 @@ public void resetLevel() {
         ImageGUI.getInstance().removeImage(banana);
     }
     getRoom().getBananas().clear();
+    getRoom().removeDonkeyKongs();
     
     // Atualiza a interface gráfica
     ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth());
