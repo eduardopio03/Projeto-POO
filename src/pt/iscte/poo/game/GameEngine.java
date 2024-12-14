@@ -146,18 +146,23 @@ private void updateMeats() {
     }
 }
 
-    public void resetLevel() {
-        currentRoom.removeElements(); // Remove todos os elementos do nível atual
-        ImageGUI.getInstance().clearImages(); // Limpa as imagens do tabuleiro
-        currentRoom = new Room(this, new File("room" + roomNumber + ".txt")); // Recarrega o nível atual
-        jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
-        jumpMan.setPosition(currentRoom.getInitialJumpManPosition()); // Reseta a posição do JumpMan
-        jumpMan.increaseHealth(100);; // Reseta a vida do JumpMan para 100
-        jumpMan.setHasBomb(0); // Reseta a bomba do JumpMan
-        ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth());
-        lastTickProcessed = ImageGUI.getInstance().getTicks(); // Atualiza o lastTickProcessed
-        ImageGUI.getInstance().update(); // Atualiza a GUI
-    }
+public void resetLevel() {
+    // Reposiciona o JumpMan na posição inicial
+    jumpMan.setPosition(currentRoom.getInitialJumpManPosition());
+    jumpMan.increaseHealth(100); // Restaura a vida para 100
+    jumpMan.setHasBomb(0); // Reseta a quantidade de bombas
+    
+    // Remove as bananas
+    currentRoom.getBananas().clear();
+    
+    // Recarrega as bananas
+    currentRoom.updateBananas();
+    
+    // Atualiza a interface gráfica
+    ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth());
+    ImageGUI.getInstance().update(); 
+}
+
     
     public void resetGame() {
         currentRoom.removeElements(); // Remove todos os elementos do nível atual

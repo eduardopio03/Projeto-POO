@@ -159,11 +159,21 @@ public class JumpMan extends Character {
 
     //Verifica se o JumpMan chegou à porta
     public boolean reachedDoor() {
-        return getRoom().getBoardMap().get(getPosition()).get(0) instanceof DoorClosed; 
+        List<GameElement> elements = getRoom().getBoardMap().get(getPosition());
+        if (elements != null && !elements.isEmpty()) {
+            GameElement element = elements.get(0);
+            return element instanceof DoorClosed;
+        }
+        return false;
     }
 
     public boolean reachedPrincess() {
-        return getRoom().getBoardMap().get(getPosition()).get(0) instanceof Princess;
+        List<GameElement> elements = getRoom().getBoardMap().get(getPosition());
+        if (elements != null && !elements.isEmpty()) {
+            GameElement element = elements.get(0);
+            return element instanceof Princess;
+        }
+        return false;
     }
 
     public boolean reachedBomb() {
