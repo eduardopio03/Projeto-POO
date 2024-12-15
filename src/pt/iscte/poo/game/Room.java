@@ -247,7 +247,7 @@ public class Room implements MapHandler{
                 removeElements();
                 System.exit(0);
             }
-            
+            scan.close();
         } 
         catch (FileNotFoundException e) {
             System.err.println("Arquivo não encontrado: " + file.getName());
@@ -255,7 +255,6 @@ public class Room implements MapHandler{
             System.out.println("Indique o nome do ficheiro a ler para o próximo nível:");
             String fileName = input.nextLine();
             fileReader(new File(fileName));
-            input.close();
         }   
     }
 
