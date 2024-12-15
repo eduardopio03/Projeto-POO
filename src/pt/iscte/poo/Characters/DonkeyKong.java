@@ -30,14 +30,18 @@ public class DonkeyKong extends Enemy {
     public int getLayer() {
         return 2;
     }
+
+    public MapHandler getHandler() {
+        return mapHandler;
+    }
     
 
     @Override
     public void move(Direction direction) {
         Point2D nextPosition = getPosition().plus(direction.asVector());
-        if (ImageGUI.getInstance().isWithinBounds(nextPosition) && mapHandler.isMoveValid(nextPosition)) {
+        if (ImageGUI.getInstance().isWithinBounds(nextPosition) && getHandler().isMoveValid(nextPosition)) {
             // Atualizar o tabuleiro
-            mapHandler.updatePosition(getPosition(), nextPosition, this);
+            getHandler().updatePosition(getPosition(), nextPosition, this);
             // Atualizar a posição do DonkeyKong
             setPosition(nextPosition);
         }
@@ -51,7 +55,7 @@ public class DonkeyKong extends Enemy {
             Point2D newPosition = getPosition().plus(direction.asVector());
             
             // Se o movimento for válido (não for parede e dentro dos limites)
-            if (mapHandler.isMoveValid(newPosition)) {
+            if (getHandler().isMoveValid(newPosition)) {
                 validDirections.add(direction);
             }
         }
@@ -64,7 +68,7 @@ public class DonkeyKong extends Enemy {
 
         // Verificar se o DonkeyKong está na mesma posição que o JumpMan
         Point2D donkeyPosition = getPosition();
-        Room room = (Room) mapHandler;
+        Room room = (Room) getHandler();
         JumpMan jumpMan = room.getEngine().getJumpMan();
         if (donkeyPosition.equals(jumpMan.getPosition())) {
         interact(jumpMan);
@@ -80,8 +84,8 @@ public class DonkeyKong extends Enemy {
     }
 
     public void launchBanana() {
-        Banana banana = new Banana(getPosition(), (Room) mapHandler);
-        ((Room) mapHandler).getBananas().add(banana);
+        Banana banana = new Banana(getPosition(), (Room) getHandler());
+        ((Room) getHandler()).getBananas().add(banana);
         ImageGUI.getInstance().addImage(banana);
     }
 

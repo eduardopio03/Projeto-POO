@@ -40,6 +40,10 @@ public class GoodMeat extends GoodConsumable {
     }
   }
 
+  public Room getRoom() {
+    return room;
+  }
+
   @Override
   public void consume(JumpMan jumpMan) {
     jumpMan.increaseHealth(10);
@@ -52,10 +56,10 @@ public class GoodMeat extends GoodConsumable {
   public void apodrecer() {
     Point2D position = this.getPosition();
     ImageGUI.getInstance().removeImage(this);
-    room.getBoardMap().get(position).remove(this);
+    getRoom().getBoardMap().get(position).remove(this);
 
-    BadMeat badMeat = new BadMeat(position, room);
-    room.getBoardMap().get(position).add(badMeat);
+    BadMeat badMeat = new BadMeat(position, getRoom());
+    getRoom().getBoardMap().get(position).add(badMeat);
     ImageGUI.getInstance().addImage(badMeat);
   }
 }

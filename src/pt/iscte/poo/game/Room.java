@@ -84,7 +84,7 @@ public class Room implements MapHandler{
         return meats;
     }
 
-    public List<DonkeyKong> getDonkeyKong() {
+    public List<DonkeyKong> getDonkeyKongs() {
         return donkeyKongs;
     }
 
@@ -96,8 +96,12 @@ public class Room implements MapHandler{
         return bats;
     }
 
+    public List<DonkeyKong> getDonkeyKongsToRemove() {
+        return donkeyKongsToRemove;
+    }
+
     public void moveDonkeyKongs() {
-        List<DonkeyKong> donkeyKongsToMove = new ArrayList<>(donkeyKongs); // Cria uma cópia da lista para evitar a modificação durante a iteração
+        List<DonkeyKong> donkeyKongsToMove = new ArrayList<>(getDonkeyKongs()); // Cria uma cópia da lista para evitar a modificação durante a iteração
         for (DonkeyKong donkeyKong : donkeyKongsToMove) {
             donkeyKong.moveRandomly();
             donkeyKong.launchBanana();
@@ -113,6 +117,10 @@ public class Room implements MapHandler{
 
     public GameEngine getEngine() {
         return engine;
+    }
+
+    public void setJumpManInitialPosition(Point2D p) {
+        this.initialJumpManPosition = p;
     }
 
     public void moveJumpMan(Direction direction) {
@@ -146,7 +154,7 @@ public class Room implements MapHandler{
                         
                         case 'H': // JumpMan
                             jumpManPosition = point;
-                            initialJumpManPosition = point;
+                            setJumpManInitialPosition(point);
                             break;
 
                         case '0': //porta
@@ -275,7 +283,7 @@ public class Room implements MapHandler{
             return false; // Fora dos limites
         }
 
-        List<GameElement> target = boardMap.get(position);
+        List<GameElement> target = getBoardMap().get(position);
 
         if (target == null) {
             return true;
@@ -298,18 +306,18 @@ public class Room implements MapHandler{
         }
 
         // Adiciona o elemento à nova posição
-        boardMap.computeIfAbsent(newPosition, k -> new ArrayList<>()).add(elementName);
+        getBoardMap().computeIfAbsent(newPosition, k -> new ArrayList<>()).add(elementName);
     }
 
     
     public void addObject(Point2D position, GameElement image) {
         // Inicializar a lista, se necessário
-        if (!boardMap.containsKey(position)) {
-            boardMap.put(position, new ArrayList<>());
+        if (!getBoardMap().containsKey(position)) {
+            getBoardMap().put(position, new ArrayList<>());
         }
     
         // Adicionar somente se o elemento ainda não estiver presente
-        List<GameElement> elements = boardMap.get(position);
+        List<GameElement> elements = getBoardMap().get(position);
         boolean exists = false;
         for (GameElement element : elements) {
             if (element.equals(image)) {
@@ -343,7 +351,7 @@ public class Room implements MapHandler{
     public void removeElements() {
         getBoardMap().clear();
         getBananas().clear();
-        getDonkeyKong().clear();
+        getDonkeyKongs().clear();
         
     }
 
@@ -367,9 +375,9 @@ public class Room implements MapHandler{
     
                         // Remove das listas específicas
                         if (element instanceof DonkeyKong) {
-                            donkeyKongs.remove(element);
+                            getDonkeyKongs().remove(element);
                         } else if (element instanceof Bat) {
-                            bats.remove(element);
+                            getBats().remove(element);
                         }
     
                         // Remove do boardMap
@@ -386,14 +394,14 @@ public class Room implements MapHandler{
     
 
     public void addDonkeyKongToRemove(DonkeyKong donkeyKong) {
-        donkeyKongsToRemove.add(donkeyKong);
+        getDonkeyKongsToRemove().add(donkeyKong);
     }
 
     public void removeDonkeyKongs() {
-        for (DonkeyKong donkeyKong : donkeyKongsToRemove) {
-            donkeyKongs.remove(donkeyKong);
+        for (DonkeyKong donkeyKong : getDonkeyKongsToRemove()) {
+            getDonkeyKongs().remove(donkeyKong);
         }
-        donkeyKongsToRemove.clear();
+        getDonkeyKongsToRemove().clear();
     }
 
     public void removeImagesBananas(List<Banana> imagesToRemove) {

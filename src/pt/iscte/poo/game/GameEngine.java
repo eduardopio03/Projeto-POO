@@ -42,6 +42,14 @@ public class GameEngine implements Observer {
         return currentRoom;
     }
 
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
     @Override
 public void update(Observed source) {
     if (ImageGUI.getInstance().wasKeyPressed()) {
@@ -86,10 +94,10 @@ public void update(Observed source) {
         System.out.println("Tic Tac : " + lastTickProcessed);
     
         if (getJumpMan().reachedDoor()) {
-            roomNumber++;
+            setRoomNumber(getRoomNumber()+1);
             getJumpMan().getRoom().removeElements(); // Remove todos os elementos das listas
             ImageGUI.getInstance().clearImages(); // Faz clear das imagens no board
-            setRoom(new Room(this, new File("room" + roomNumber + ".txt"))); // Cria um novo room
+            setRoom(new Room(this, new File("room" + getRoomNumber() + ".txt"))); // Cria um novo room
             getJumpMan().setRoom(getRoom());
             ImageGUI.getInstance().update();
             lastTickProcessed++; // Atualiza o lastTickProcessed após resetar o nível
@@ -174,17 +182,17 @@ public void resetLevel() {
 
     
     public void resetGame() {
-        currentRoom.removeElements(); // Remove todos os elementos do nível atual
+        getRoom().removeElements(); // Remove todos os elementos do nível atual
         ImageGUI.getInstance().clearImages(); // Limpa as imagens do tabuleiro
-        roomNumber = 0; // Reseta o número do nível
-        currentRoom = new Room(this, new File("room0.txt")); // Recarrega o primeiro nível
-        jumpMan.setRoom(currentRoom); // Atualiza o Room do JumpMan
-        jumpMan.setPosition(getRoom().getInitialJumpManPosition()); // Reseta a posição do JumpMan
-        jumpMan.increaseHealth(100); // Reseta a vida do JumpMan para 100
-        jumpMan.resetLives(); // Reseta as vidas do JumpMan
-        jumpMan.resetAttack(); // Reseta o ataque do JumpMan
-        jumpMan.setHasBomb(0); // Reseta a bomba do JumpMan
-        ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth() + " Vidas restantes: " + jumpMan.getLives()); // Atualiza a mensagem de status
+        setRoomNumber(0); // Reseta o número do nível
+        setRoom(new Room(this, new File("room0.txt"))); // Recarrega o primeiro nível
+        getJumpMan().setRoom(currentRoom); // Atualiza o Room do JumpMan
+        getJumpMan().setPosition(getRoom().getInitialJumpManPosition()); // Reseta a posição do JumpMan
+        getJumpMan().increaseHealth(100); // Reseta a vida do JumpMan para 100
+        getJumpMan().resetLives(); // Reseta as vidas do JumpMan
+        getJumpMan().resetAttack(); // Reseta o ataque do JumpMan
+        getJumpMan().setHasBomb(0); // Reseta a bomba do JumpMan
+        ImageGUI.getInstance().setStatusMessage("Vida atual: " + getJumpMan().getHealth() + " Vidas restantes: " + getJumpMan().getLives()); // Atualiza a mensagem de status
         lastTickProcessed = ImageGUI.getInstance().getTicks(); // Atualiza o lastTickProcessed
         ImageGUI.getInstance().update(); // Atualiza a GUI
     }

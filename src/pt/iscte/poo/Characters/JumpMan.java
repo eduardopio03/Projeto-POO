@@ -50,8 +50,12 @@ public class JumpMan extends Character {
         return lives = 3;
     }
 
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
     public void decreaseLives() {
-        lives--;
+        setLives(getLives()-1);;
         if (lives > 0) {
             room.getEngine().resetLevel();
         } else {
@@ -124,7 +128,7 @@ public class JumpMan extends Character {
         Point2D belowPosition = getPosition().plus(Direction.DOWN.asVector());
     
         // Verifica se a posição abaixo é válida e se não há suporte
-        while (room.isMoveValid(belowPosition) && !hasSupport(belowPosition)) {
+        while (getRoom().isMoveValid(belowPosition) && !hasSupport(belowPosition)) {
             getRoom().updatePosition(getPosition(), belowPosition, this);
             super.setPosition(belowPosition);
             belowPosition = belowPosition.plus(Direction.DOWN.asVector());
@@ -134,7 +138,7 @@ public class JumpMan extends Character {
 
     private boolean hasSupport(Point2D position) {
     // Verifica elementos na posição abaixo
-    List<GameElement> elementsBelow = room.getBoardMap().get(position);
+    List<GameElement> elementsBelow = getRoom().getBoardMap().get(position);
     if (elementsBelow != null) {
         for (GameElement element : elementsBelow) {
             if (element instanceof Wall || element instanceof Stairs) {
@@ -146,7 +150,7 @@ public class JumpMan extends Character {
 }
 
     private boolean isOnStairs(Point2D position) {
-        List<GameElement> elementsAtPosition = room.getBoardMap().get(position);
+        List<GameElement> elementsAtPosition = getRoom().getBoardMap().get(position);
         if (elementsAtPosition != null) {
             for (GameElement element : elementsAtPosition) {
                 if (element instanceof Stairs) {
