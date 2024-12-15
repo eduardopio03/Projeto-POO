@@ -55,10 +55,17 @@ public class Bomb extends GameElement implements Interactable {
 
   @Override
   public void interact(JumpMan jumpMan) {
-    jumpMan.pickBomb();
-    ImageGUI.getInstance().removeImage(this);
-    jumpMan.getRoom().getBoardMap().get(this.getPosition()).remove(this);
-    ImageGUI.getInstance().setStatusMessage("Atingido por uma bomba! Vida atual: " + jumpMan.getHealth());
+    if (getRoom().getEngine().getJumpMan().hasBomb() == 0) {
+      jumpMan.pickBomb();
+      ImageGUI.getInstance().removeImage(this);
+      jumpMan.getRoom().getBoardMap().get(this.getPosition()).remove(this);
+      ImageGUI.getInstance().setStatusMessage("Atingido por uma bomba! Vida atual: " + jumpMan.getHealth());
+    }
+    //morre e o nivel da reset
+    if (getRoom().getEngine().getJumpMan().hasBomb() == 2) {
+      getRoom().getEngine().getJumpMan().takeDamage(getRoom().getEngine().getJumpMan().getHealth());
+      getRoom().getEngine().resetLevel();
+    }
   }
 
   public void interact(Enemy enemy) {

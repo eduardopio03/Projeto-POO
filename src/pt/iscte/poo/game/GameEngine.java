@@ -177,6 +177,10 @@ public void resetLevel() {
     
     // Atualiza a interface gráfica
     ImageGUI.getInstance().setStatusMessage("Vida atual: " + jumpMan.getHealth());
+    
+    // Adiciona o JumpMan de volta à GUI
+    ImageGUI.getInstance().addImage(getJumpMan());
+
     ImageGUI.getInstance().update(); 
 }
 
