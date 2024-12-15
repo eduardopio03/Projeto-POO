@@ -7,7 +7,7 @@ import pt.iscte.poo.utils.Point2D;
 
 public class BadMeat extends BadConsumable{
 
-  private Room room;
+  private Room room; // Para a GoodMeat usar o room para inserir a BadMeat
 
   public BadMeat(Point2D position, Room room) {
     super(position);

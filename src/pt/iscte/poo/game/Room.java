@@ -370,7 +370,7 @@ public class Room implements MapHandler{
                         // Remove da GUI
                         ImageGUI.getInstance().removeImage(element);
                         if (element instanceof JumpMan) {
-                            getEngine().getJumpMan().takeDamage(100);
+                            getEngine().getJumpMan().takeDamage(getEngine().getJumpMan().getHealth());
                         }
     
                         // Remove das listas específicas
@@ -385,7 +385,6 @@ public class Room implements MapHandler{
                     }
                     if(!(element instanceof StaticElement)) {
                         ImageGUI.getInstance().removeImage(element);
-                        //getBoardMap().get(element.getPosition()).get(1);
                     }
                 }
             }

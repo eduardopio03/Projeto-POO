@@ -1,5 +1,6 @@
 package pt.iscte.poo.Characters;
 
+import java.util.ArrayList;
 import java.util.List;
 import objects.DoorClosed;
 import objects.Stairs;
@@ -74,55 +75,59 @@ public class JumpMan extends Character {
     }
 
     @Override
-    public void move(Direction direction) {
-        if (direction == null) {
-            throw new IllegalArgumentException("Direção inválida!");
-        }
-
-        Point2D newPosition = super.getPosition().plus(direction.asVector());
-
-        // Verifica se o movimento é válido
-        if (getRoom().isMoveValid(newPosition)) {
-
-            // Se for um movimento para cima, verifica se há suporte ou se está numa escada
-            if (direction == Direction.UP) {
-                if (!isOnStairs(super.getPosition())) {
-                    System.out.println("Movimento para cima inválido: sem escada!");
-                    return; // Bloqueia o movimento para cima
-                }
-            }
-
-            // Atualiza a posição no mapa e no jogo
-            getRoom().updatePosition(super.getPosition(), newPosition, this);
-            super.setPosition(newPosition);
-
-            // Verifica a posição abaixo da nova posição do JumpMan
-            Point2D positionBelow = newPosition.plus(Direction.DOWN.asVector());
-            List<GameElement> elementsBelow = getRoom().getBoardMap().get(positionBelow);
-            if (elementsBelow != null) {
-                for (GameElement element : elementsBelow) {
-                    if (element instanceof Interactable) {
-                        ((Interactable) element).interact(this);
-                    }
-                }
-            }
-
-            // Verifica e consome consumíveis e interactables na nova posição
-            List<GameElement> elementsAtNewPosition = getRoom().getBoardMap().get(newPosition);
-            if (elementsAtNewPosition != null) {
-                for (GameElement element : elementsAtNewPosition) {
-                    if (element instanceof Consumable) {
-                        ((Consumable) element).consume(this);
-                    }
-                    if (element instanceof Interactable) {
-                        ((Interactable) element).interact(this);
-                    }
-                }
-            }
-        } else {
-            System.out.println("Movimento inválido para " + newPosition);
-        }
+public void move(Direction direction) {
+    if (direction == null) {
+        throw new IllegalArgumentException("Direção inválida!");
     }
+
+    Point2D newPosition = super.getPosition().plus(direction.asVector());
+
+    // Verifica se o movimento é válido
+    if (getRoom().isMoveValid(newPosition)) {
+
+        // Se for um movimento para cima, verifica se há suporte ou se está numa escada
+        if (direction == Direction.UP) {
+            if (!isOnStairs(super.getPosition())) {
+                System.out.println("Movimento para cima inválido: sem escada!");
+                return; // Bloqueia o movimento para cima
+            }
+        }
+
+        // Atualiza a posição no mapa e no jogo
+        getRoom().updatePosition(super.getPosition(), newPosition, this);
+        super.setPosition(newPosition);
+
+        // Verifica a posição abaixo da nova posição do JumpMan
+        Point2D positionBelow = newPosition.plus(Direction.DOWN.asVector());
+        List<GameElement> elementsBelow = getRoom().getBoardMap().get(positionBelow);
+        if (elementsBelow != null) {
+            // Cria uma cópia da lista para evitar ConcurrentModificationException
+            List<GameElement> elementsBelowCopy = new ArrayList<>(elementsBelow);
+            for (GameElement element : elementsBelowCopy) {
+                if (element instanceof Interactable) {
+                    ((Interactable) element).interact(this);
+                }
+            }
+        }
+
+        // consumíveis e interactables na nova posição
+        List<GameElement> elementsAtNewPosition = getRoom().getBoardMap().get(newPosition);
+        if (elementsAtNewPosition != null) {
+            // evitar ConcurrentModificationException
+            List<GameElement> elementsAtNewPositionCopy = new ArrayList<>(elementsAtNewPosition);
+            for (GameElement element : elementsAtNewPositionCopy) {
+                if (element instanceof Consumable) {
+                    ((Consumable) element).consume(this);
+                }
+                if (element instanceof Interactable) {
+                    ((Interactable) element).interact(this);
+                }
+            }
+        }
+    } else {
+        System.out.println("Movimento inválido para " + newPosition);
+    }
+}
 
     public void fall() {
         Point2D belowPosition = getPosition().plus(Direction.DOWN.asVector());

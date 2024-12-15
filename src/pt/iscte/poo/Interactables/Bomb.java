@@ -63,8 +63,7 @@ public class Bomb extends GameElement implements Interactable {
     }
     //morre e o nivel da reset
     if (getRoom().getEngine().getJumpMan().hasBomb() == 2) {
-      getRoom().getEngine().getJumpMan().takeDamage(getRoom().getEngine().getJumpMan().getHealth());
-      getRoom().getEngine().resetLevel();
+      explode();
     }
   }
 
