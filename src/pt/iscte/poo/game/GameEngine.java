@@ -158,7 +158,7 @@ private void updateMeats() {
 
 public void resetLevel() {
     // Reposiciona o JumpMan na posição inicial
-    getJumpMan().setPosition(currentRoom.getInitialJumpManPosition());
+    getJumpMan().setPosition(getRoom().getInitialJumpManPosition());
     getJumpMan().increaseHealth(100); // Restaura a vida para 100
     getJumpMan().setHasBomb(0); // Reseta a quantidade de bombas
     
