@@ -190,7 +190,7 @@ public class JumpMan extends Character {
     
     
     public void dropBomb() {
-    	Bomb bomb = new Bomb(getPosition(), true, getRoom());
+    	Bomb bomb = new Bomb(getPosition(), false, getRoom());
     	getRoom().addObject(getPosition(),bomb);
     	ImageGUI.getInstance().addImage(bomb);
     	setHasBomb(2);
